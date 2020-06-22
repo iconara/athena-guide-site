@@ -1,5 +1,8 @@
 <template>
-  <default-layout :logo="false">
+  <default-layout
+    :include-logo="false"
+    :include-copyright="false"
+  >
     <template v-slot:main-header>
       <logo/>
     </template>

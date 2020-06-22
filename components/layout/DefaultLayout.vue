@@ -1,7 +1,7 @@
 <template>
   <main>
     <logo
-      v-if="logo"
+      v-if="includeLogo"
       class="corner-logo"
       :tagline="false"
       :multiline="true"
@@ -26,6 +26,9 @@
         />
       </slot>
     </section>
+    <footer v-if="includeCopyright">
+      &copy; {{copyrightYear}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
+    </footer>
   </main>
 </template>
 
@@ -40,9 +43,17 @@ export default Vue.extend({
     ArticleList,
   },
   props: {
-    logo: {
+    includeLogo: {
       type: Boolean,
       default: true,
+    },
+    includeCopyright: {
+      type: Boolean,
+      default: true,
+    },
+    copyrightYear: {
+      type: Number,
+      default: (new Date()).getUTCFullYear(),
     },
   },
   async fetch () {
@@ -94,6 +105,11 @@ main {
     grid-column: 2;
     grid-row: 2;
   }
+}
+
+footer {
+  margin-top: 4rem;
+  font-size: 80%;
 }
 
 @media all and (max-width: 959px) {

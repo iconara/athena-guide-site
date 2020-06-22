@@ -1,5 +1,7 @@
 <template>
-  <default-layout>
+  <default-layout
+    :copyright-year="article && article.date.year()"
+  >
     <template v-slot:main-header>
       <h1>
         {{title}}
@@ -31,6 +33,7 @@ export default Vue.extend({
   },
   async fetch () {
     const article: Article = await this.$store.dispatch('loadArticle', this.$route.params.slug)
+    this.article = article
     this.title = article.title
     this.author = article.author
     this.date = article.isoDate
