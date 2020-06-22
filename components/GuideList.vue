@@ -15,6 +15,7 @@
       <nuxt-link
         :to="{name: 'guides-slug', params: {slug: guide.slug}}"
         class="title"
+        :title="guide.preamble"
         v-text="guide.title"
       />
     </div>
