@@ -1,10 +1,10 @@
 <template>
   <default-layout>
     <template v-slot:main-header>
-      <h1>The Athena Guide</h1>
+      <h1>About the Athena Guide</h1>
     </template>
     <template v-slot:main-content>
-      <div v-html="intro"/> <!-- eslint-disable-line vue/no-v-html -->
+      <div v-if="about" v-html="about.body"/> <!-- eslint-disable-line vue/no-v-html -->
     </template>
   </default-layout>
 </template>
@@ -18,22 +18,13 @@ export default Vue.extend({
     DefaultLayout,
   },
   async fetch () {
-    this.intro = await this.$store.dispatch('loadIntro')
-    this.guides = await this.$store.dispatch('loadGuides')
+    const about: Article = await this.$store.dispatch('loadAbout')
+    this.about = about
   },
   data () {
     return {
-      intro: '',
-      guides: [],
+      about: null,
     }
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.guides {
-  .guide {
-    margin-bottom: 2rem;
-  }
-}
-</style>

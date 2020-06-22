@@ -6,7 +6,7 @@
       </h1>
     </template>
     <template v-slot:main-content>
-      <div class="guide">
+      <div class="article">
         <div class="meta">
           <div class="date" v-text="date"/>
           <div v-if="author" class="author">
@@ -23,18 +23,18 @@
 import Vue from 'vue'
 import moment, {Moment} from 'moment'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import {Guide} from '@/lib/guides'
+import {Article} from '@/lib/article'
 
 export default Vue.extend({
   components: {
     DefaultLayout,
   },
   async fetch () {
-    const guide: Guide = await this.$store.dispatch('loadGuide', this.$route.params.slug)
-    this.title = guide.title
-    this.author = guide.author
-    this.date = guide.isoDate
-    this.body = guide.body
+    const article: Article = await this.$store.dispatch('loadArticle', this.$route.params.slug)
+    this.title = article.title
+    this.author = article.author
+    this.date = article.isoDate
+    this.body = article.body
   },
   data () {
     return {
@@ -48,7 +48,7 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.guide {
+.article {
   .meta {
     margin-bottom: 0.5rem;
 

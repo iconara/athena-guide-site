@@ -1,22 +1,22 @@
 <template>
-  <div class="guides">
+  <div class="articles">
     <b-spinner v-if="loading"/>
     <div
-      v-for="guide in guides"
+      v-for="article in articles"
       v-else
-      :key="guide.path"
-      class="guide"
+      :key="article.path"
+      class="article"
     >
       <span
         v-if="showDates"
         class="date"
-        v-text="guide.isoDate"
+        v-text="article.isoDate"
       />
       <nuxt-link
-        :to="{name: 'guides-slug', params: {slug: guide.slug}}"
+        :to="{name: 'articles-slug', params: {slug: article.slug}}"
         class="title"
-        :title="guide.preamble"
-        v-text="guide.title"
+        :title="article.preamble"
+        v-text="article.title"
       />
     </div>
   </div>
@@ -28,7 +28,7 @@ import moment, {Moment} from 'moment'
 
 export default Vue.extend({
   props: {
-    guides: {
+    articles: {
       type: Array,
       default () { return [] },
     },
@@ -45,7 +45,7 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.guide {
+.article {
   margin-bottom: 0.5rem;
 
   a {

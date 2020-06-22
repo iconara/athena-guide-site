@@ -48,7 +48,7 @@ export default {
     },
   },
   generate: {
-    routes: glob.sync('guides/**/*.md', {cwd: 'content'}).map((p) => p.replace(/\.md$/, '')),
+    routes: glob.sync('articles/**/*.md', {cwd: 'content'}).map((p) => p.replace(/\.md$/, '')),
   },
   bootstrapVue: {
     icons: true,

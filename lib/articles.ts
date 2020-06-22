@@ -1,6 +1,6 @@
 import moment, {Moment} from 'moment'
 
-export interface GuideMeta {
+export interface ArticleMeta {
   readonly title: string
   readonly preamble: string
   readonly date: Moment
@@ -9,7 +9,7 @@ export interface GuideMeta {
   readonly slug?: string
 }
 
-export class Guide implements GuideMeta {
+export class Article implements ArticleMeta {
   readonly title: string
   readonly date: Moment
   readonly author?: string
@@ -37,7 +37,7 @@ export class Guide implements GuideMeta {
     return this.date.format('YYYY-MM-DD')
   }
 
-  get meta (): GuideMeta {
+  get meta (): ArticleMeta {
     return {
       title: this.title,
       preamble: this.preamble,

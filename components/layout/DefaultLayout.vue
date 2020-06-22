@@ -15,13 +15,13 @@
     </section>
     <section class="sidebar-header">
       <slot name="sidebar-header">
-        <h2>All guides</h2>
+        <h2>All articles</h2>
       </slot>
     </section>
     <section class="sidebar-content">
       <slot name="sidebar-content">
-        <guide-list
-          :guides="guides"
+        <article-list
+          :articles="articles"
           :loading="loading"
         />
       </slot>
@@ -32,12 +32,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import Logo from '@/components/Logo.vue'
-import GuideList from '@/components/GuideList.vue'
+import ArticleList from '@/components/ArticleList.vue'
 
 export default Vue.extend({
   components: {
     Logo,
-    GuideList,
+    ArticleList,
   },
   props: {
     logo: {
@@ -48,7 +48,7 @@ export default Vue.extend({
   async fetch () {
     this.loading = true
     try {
-      this.guides = await this.$store.dispatch('loadGuides')
+      this.articles = await this.$store.dispatch('loadArticles')
     } finally {
       this.loading = false
     }
@@ -56,7 +56,7 @@ export default Vue.extend({
   data () {
     return {
       loading: false,
-      guides: [],
+      articles: [],
     }
   },
 })

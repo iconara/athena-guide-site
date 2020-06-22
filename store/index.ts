@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex, {MutationTree, ActionTree, GetterTree} from 'vuex'
 import moment from 'moment'
-import {GuideMeta, Guide} from '@/lib/guides'
+import {Article, ArticleMeta} from '@/lib/articles'
 
 Vue.use(Vuex)
 
@@ -15,37 +15,44 @@ export const mutations: MutationTree<State> = {
 }
 
 export const actions: ActionTree<State, State> = {
-  async loadGuides (): Promise<GuideMeta[]> {
-    const context = await require.context('~/content/guides', true, /\.md$/)
+  async loadArticles (): Promise<ArticleMeta[]> {
+    const context = await require.context('~/content/articles', true, /\.md$/)
     return (await context.keys())
       .map((key: string) => {
-        const rawGuide = context(key)
+        const rawArticle = context(key)
         const slug = key.replace(/^\.\/(.+)\.md$/, '$1')
-        return new Guide(
-          rawGuide.attributes.title,
+        return new Article(
+          rawArticle.attributes.title,
           slug,
-          moment(rawGuide.attributes.date),
-          rawGuide.attributes.author,
-          rawGuide.html,
+          moment(rawArticle.attributes.date),
+          rawArticle.attributes.author,
+          rawArticle.html,
         )
       })
-      .sort((a: GuideMeta, b: GuideMeta) => b.date.valueOf() - a.date.valueOf())
-      .map((guide) => guide.meta)
+      .sort((a: Article, b: Article) => b.date.valueOf() - a.date.valueOf())
+      .map((a) => a.meta)
   },
-  async loadGuide (_ctx, slug: string): Promise<Guide> {
-    const rawGuide = await import(`~/content/guides/${slug}.md`)
-    const {title, date, author} = rawGuide.attributes
-    return new Guide(
+  async loadArticle (_ctx, slug: string): Promise<Article> {
+    const rawArticle = await import(`~/content/articles/${slug}.md`)
+    const {title, date, author} = rawArticle.attributes
+    return new Article(
       title,
       undefined,
       moment(date),
       author,
-      rawGuide.html,
+      rawArticle.html,
     )
   },
-  async loadIntro (): Promise<string> {
-    const rawIntro = await import('~/content/intro.md')
-    return rawIntro.html
+  async loadAbout (): Promise<Article> {
+    const rawArticle = await import(`~/content/about.md`)
+    const {title, date, author} = rawArticle.attributes
+    return new Article(
+      title,
+      undefined,
+      moment(date),
+      author,
+      rawArticle.html,
+    )
   },
 }
 

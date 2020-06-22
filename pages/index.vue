@@ -6,22 +6,22 @@
     <template v-slot:main-content>
       <div>
         <p>
-          Athena is a serverless query service for data on S3, but there is a lot behind that description. Here you will find guides that explain the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.
+          Athena is a serverless query service for data on S3, but there is a lot behind that description. Here you will find articles that explain the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.
         </p>
         <p>
-          <nuxt-link :to="{name: 'guides'}">
+          <nuxt-link :to="{name: 'about'}">
             More about the guide &rarr;
           </nuxt-link>
         </p>
       </div>
     </template>
     <template v-slot:sidebar-header>
-      <h2>Latest guides</h2>
+      <h2>Latest articles</h2>
     </template>
     <template v-slot:sidebar-content>
       <div>
-        <guide-list
-          :guides="guides"
+        <article-list
+          :articles="articles"
           :loading="loading"
           :show-dates="true"
         />
@@ -34,19 +34,19 @@
 import Vue from 'vue'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
 import Logo from '@/components/Logo.vue'
-import GuideList from '@/components/GuideList.vue'
+import ArticleList from '@/components/ArticleList.vue'
 
 export default Vue.extend({
   components: {
     DefaultLayout,
     Logo,
-    GuideList,
+    ArticleList,
   },
   async fetch () {
     this.loading = true
     try {
-      const guides = await this.$store.dispatch('loadGuides')
-      this.guides = guides.slice(0, 5)
+      const articles = await this.$store.dispatch('loadArticles')
+      this.articles = articles.slice(0, 5)
     } finally {
       this.loading = false
     }
@@ -54,14 +54,14 @@ export default Vue.extend({
   data () {
     return {
       loading: false,
-      guides: [],
+      articles: [],
     }
   },
 })
 </script>
 
 <style scoped lang="scss">
-.more-guides {
+.more-articles {
   display: block;
   margin-top: 0.5rem;
 }
