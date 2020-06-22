@@ -63,4 +63,8 @@ h2 {
   font-style: italic;
   position: relative;
 }
+
+a {
+  border: none;
+}
 </style>

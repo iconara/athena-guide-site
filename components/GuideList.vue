@@ -46,5 +46,9 @@ export default Vue.extend({
 <style scoped lang="scss">
 .guide {
   margin-bottom: 0.5rem;
+
+  a {
+    border: none;
+  }
 }
 </style>
