@@ -15,7 +15,7 @@
     </section>
     <section class="sidebar-header">
       <slot name="sidebar-header">
-        <h2>Guides</h2>
+        <h2>All guides</h2>
       </slot>
     </section>
     <section class="sidebar-content">

@@ -6,10 +6,12 @@
     <template v-slot:main-content>
       <div>
         <p>
-          Athena is a serverless query service for data on S3, but there is a lot behind that description. This guide explains the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine of your data lake.
+          Athena is a serverless query service for data on S3, but there is a lot behind that description. Here you will find guides that explain the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.
         </p>
         <p>
-          The guide also covers practical things like how to build your own security monitoring with Athena and CloudTrail, and use it get deeper insight into your AWS bill than what Cost Explorer provides.
+          <nuxt-link :to="{name: 'guides'}">
+            More about the guide &rarr;
+          </nuxt-link>
         </p>
       </div>
     </template>
@@ -23,11 +25,6 @@
           :loading="loading"
           :show-dates="true"
         />
-        <div v-if="hasMoreGuides" class="more-guides">
-          <nuxt-link :to="{name: 'guides'}">
-            More
-          </nuxt-link>
-        </div>
       </div>
     </template>
   </default-layout>
@@ -49,7 +46,6 @@ export default Vue.extend({
     this.loading = true
     try {
       const guides = await this.$store.dispatch('loadGuides')
-      this.hasMoreGuides = guides.length > 5
       this.guides = guides.slice(0, 5)
     } finally {
       this.loading = false
@@ -59,7 +55,6 @@ export default Vue.extend({
     return {
       loading: false,
       guides: [],
-      hasMoreGuides: false,
     }
   },
 })

@@ -43,6 +43,10 @@ export const actions: ActionTree<State, State> = {
       rawGuide.html,
     )
   },
+  async loadIntro (): Promise<string> {
+    const rawIntro = await import('~/content/intro.md')
+    return rawIntro.html
+  },
 }
 
 export default function () {
