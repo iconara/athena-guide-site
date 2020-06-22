@@ -1,9 +1,9 @@
+import path from 'path'
+import glob from 'glob'
+import MarkdownMode from 'frontmatter-markdown-loader/mode'
 
 export default {
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
   head: {
     title: 'The Athena Guide',
     meta: [
@@ -13,43 +13,44 @@ export default {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
-    ]
+      {rel: 'stylesheet', href: 'https://use.typekit.net/kbt8opn.css'},
+    ],
   },
-  /*
-  ** Customize the progress-bar color
-  */
   loading: {color: '#fff'},
-  /*
-  ** Global CSS
-  */
   css: [
+    '@/assets/styles/main.scss',
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-  ],
-  /*
-  ** Nuxt.js dev-modules
-  */
+  styleResources: {
+    scss: [
+      'assets/styles/includes.scss',
+    ],
+  },
   buildModules: [
     '@nuxt/typescript-build',
   ],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
-    // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
+    '@nuxtjs/style-resources',
   ],
-  /*
-  ** Build configuration
-  */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend (_config, _ctx) {
+    extend (config, _ctx) {
+      config.module.rules.push({
+        test: /\.md$/,
+        loader: 'frontmatter-markdown-loader',
+        include: path.resolve(__dirname, 'content'),
+        options: {
+          mode: [MarkdownMode.HTML],
+          vue: {
+            root: 'markdown-body',
+          },
+        },
+      })
     },
+  },
+  generate: {
+    routes: glob.sync('guides/**/*.md', {cwd: 'content'}).map((p) => p.replace(/\.md$/, '')),
+  },
+  bootstrapVue: {
+    icons: true,
   },
 }
