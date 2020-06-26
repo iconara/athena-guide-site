@@ -42,13 +42,9 @@ Resources:
         version: 0.1
         frontend:
           phases:
-            preBuild:
-              commands:
-                - yarn install
-                - yarn test
             build:
               commands:
-                - yarn generate
+                - yarn install test generate
           artifacts:
             baseDirectory: dist
             files:
