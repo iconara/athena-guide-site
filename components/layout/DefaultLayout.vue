@@ -85,9 +85,10 @@ main {
   @include base-layout;
 
   .main-header {
-    grid-column: 1 / span 2;
+    grid-column: 1;
     grid-row: 1;
     align-self: end;
+    width: 125%;
   }
 
   .main-content {
