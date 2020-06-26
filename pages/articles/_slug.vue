@@ -1,6 +1,6 @@
 <template>
   <default-layout
-    :copyright-year="article && article.date.year()"
+    :copyright-year="copyrightYear"
   >
     <template v-slot:main-header>
       <h1>
@@ -10,7 +10,7 @@
     <template v-slot:main-content>
       <div class="article">
         <div class="meta">
-          <div class="date" v-text="date"/>
+          <div class="date" v-text="displayDate"/>
           <div v-if="author" class="author">
             by <span class="name">{{author}}</span>
           </div>
@@ -32,18 +32,18 @@ export default Vue.extend({
   },
   async fetch () {
     const article: Article = await this.$store.dispatch('loadArticle', this.$route.params.slug)
-    this.article = article
     this.title = article.title
     this.author = article.author
-    this.date = article.isoDate
+    this.displayDate = article.isoDate
+    this.copyrightYear = article.copyrightYear
     this.body = article.body
   },
   data () {
     return {
-      article: null as unknown as Article,
+      copyrightYear: null as unknown as number,
       title: '',
       author: undefined as unknown as string | undefined,
-      date: '',
+      displayDate: '',
       body: '',
     }
   },

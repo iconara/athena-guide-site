@@ -37,6 +37,10 @@ export class Article implements ArticleMeta {
     return this.date.format('YYYY-MM-DD')
   }
 
+  get copyrightYear (): number {
+    return parseInt(this.date.format('YYYY'))
+  }
+
   get meta (): ArticleMeta {
     return {
       title: this.title,
