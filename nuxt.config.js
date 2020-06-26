@@ -20,11 +20,6 @@ export default {
   css: [
     '@/assets/styles/main.scss',
   ],
-  styleResources: {
-    scss: [
-      'assets/styles/includes.scss',
-    ],
-  },
   buildModules: [
     '@nuxt/typescript-build',
   ],

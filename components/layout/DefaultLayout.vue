@@ -82,7 +82,13 @@ export default Vue.extend({
 }
 
 main {
-  @include base-layout;
+  width: 100%;
+  display: grid;
+  padding-top: 7rem;
+  grid-template-columns: 35rem 25vw;
+  grid-template-rows: 15rem auto;
+  row-gap: 1rem;
+  column-gap: 15vw;
 
   .main-header {
     grid-column: 1;
@@ -130,7 +136,8 @@ footer {
 
 @media all and (max-width: 799px) {
   main {
-    @include base-layout-narrow;
+    grid-template-columns: 70vw auto;
+    grid-template-rows: 8rem auto;
   }
 }
 </style>
