@@ -23,9 +23,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import moment, {Moment} from 'moment'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import {Article} from '@/lib/article'
+import {Article} from '@/lib/articles'
 
 export default Vue.extend({
   components: {
@@ -41,6 +40,7 @@ export default Vue.extend({
   },
   data () {
     return {
+      article: null as unknown as Article,
       title: '',
       author: undefined as unknown as string | undefined,
       date: '',

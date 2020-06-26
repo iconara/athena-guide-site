@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import {Article} from '@/lib/articles'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
 
 export default Vue.extend({
@@ -23,7 +24,7 @@ export default Vue.extend({
   },
   data () {
     return {
-      about: null,
+      about: null as unknown as Article,
     }
   },
 })
