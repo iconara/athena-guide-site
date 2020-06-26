@@ -24,8 +24,6 @@
     <template v-slot:sidebar-content>
       <div>
         <article-list
-          :articles="articles"
-          :loading="loading"
           :show-dates="true"
         />
       </div>
@@ -44,21 +42,6 @@ export default Vue.extend({
     DefaultLayout,
     Logo,
     ArticleList,
-  },
-  async fetch () {
-    this.loading = true
-    try {
-      const articles = await this.$store.dispatch('loadArticles')
-      this.articles = articles.slice(0, 5)
-    } finally {
-      this.loading = false
-    }
-  },
-  data () {
-    return {
-      loading: false,
-      articles: [],
-    }
   },
 })
 </script>

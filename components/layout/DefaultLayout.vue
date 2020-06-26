@@ -20,10 +20,7 @@
     </section>
     <section class="sidebar-content">
       <slot name="sidebar-content">
-        <article-list
-          :articles="articles"
-          :loading="loading"
-        />
+        <article-list/>
       </slot>
     </section>
     <footer v-if="includeCopyright">
@@ -55,20 +52,6 @@ export default Vue.extend({
       type: Number,
       default: (new Date()).getUTCFullYear(),
     },
-  },
-  async fetch () {
-    this.loading = true
-    try {
-      this.articles = await this.$store.dispatch('loadArticles')
-    } finally {
-      this.loading = false
-    }
-  },
-  data () {
-    return {
-      loading: false,
-      articles: [],
-    }
   },
 })
 </script>

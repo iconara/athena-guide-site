@@ -27,18 +27,24 @@ import Vue from 'vue'
 
 export default Vue.extend({
   props: {
-    articles: {
-      type: Array,
-      default () { return [] },
-    },
-    loading: {
-      type: Boolean,
-      default: true,
-    },
     showDates: {
       type: Boolean,
       default: false,
     },
+  },
+  async fetch () {
+    this.loading = true
+    try {
+      this.articles = await this.$store.dispatch('loadArticles')
+    } finally {
+      this.loading = false
+    }
+  },
+  data () {
+    return {
+      loading: false,
+      articles: [],
+    }
   },
 })
 </script>
