@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import moment, {Moment} from 'moment'
 
 export default Vue.extend({
   props: {
