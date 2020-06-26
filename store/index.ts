@@ -44,7 +44,7 @@ export const actions: ActionTree<State, State> = {
     )
   },
   async loadAbout (): Promise<Article> {
-    const rawArticle = await import(`~/content/about.md`)
+    const rawArticle = await import(`~/content/${'about'}.md`)
     const {title, date, author} = rawArticle.attributes
     return new Article(
       title,
