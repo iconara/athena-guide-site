@@ -27,7 +27,7 @@ export class Article implements ArticleMeta {
   get preamble (): string {
     const matches = this.body.match(/<p>(.+?)<\/p>/)
     if (matches) {
-      return matches[1]
+      return matches[1].replace(/<\/?.+?>/g, '')
     } else {
       return ''
     }
