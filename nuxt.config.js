@@ -9,10 +9,14 @@ export default {
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no'},
-      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
+      {name: 'theme-color', content: '#ffffff'},
+      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''},
     ],
     link: [
-      {rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg'},
+      {rel: 'icon', href: '/favicon.svg'},
+      {rel: 'mask-icon', href: '/favicon.svg', color: '#000000'},
+      {rel: 'apple-touch-icon', href: '/apple-touch-icon.png'},
+      {rel: 'manifest', href: 'manifest.json'},
       {rel: 'stylesheet', href: 'https://use.typekit.net/kbt8opn.css'},
     ],
   },
