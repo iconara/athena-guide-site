@@ -69,3 +69,16 @@ export default Vue.extend({
   }
 }
 </style>
+
+<style lang="scss">
+.article {
+  .body {
+    pre {
+      background-color: #f9f9f9;
+      width: 125%;
+      padding: 0.5rem;
+      margin-left: -0.5rem;
+    }
+  }
+}
+</style>
