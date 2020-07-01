@@ -68,10 +68,10 @@ main {
   width: 100%;
   display: grid;
   padding-top: 7rem;
-  grid-template-columns: 35rem 25vw;
+  grid-template-columns: 35rem 23vw;
   grid-template-rows: 15rem auto;
   row-gap: 1rem;
-  column-gap: 15vw;
+  column-gap: 12vw;
 
   .main-header {
     grid-column: 1;

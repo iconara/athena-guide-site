@@ -2,8 +2,7 @@
   <div class="logo">
     <h1 :style="{'text-align': (multiline ? 'center' : 'left'), 'cursor': (backlink ? 'pointer' : 'auto')}" @click="onClick">
       <span class="the">The</span>
-      Athena<br v-if="multiline">
-      Guide
+      Athena<br v-if="multiline"><span v-else class="space"/>Guide
     </h1>
     <h2 v-if="tagline">
       An in-depth guide to <a href="https://aws.amazon.com/athena/">Amazon Athena</a>.
@@ -53,6 +52,11 @@ h1 {
     position: absolute;
     top: -0.9em;
     left: 2.8em;
+  }
+
+  .space {
+    display: inline-block;
+    width: 0.7rem;
   }
 }
 
