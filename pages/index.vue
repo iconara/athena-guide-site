@@ -23,9 +23,7 @@
     </template>
     <template v-slot:sidebar-content>
       <div>
-        <article-list
-          :show-dates="true"
-        />
+        <article-list/>
       </div>
     </template>
   </default-layout>

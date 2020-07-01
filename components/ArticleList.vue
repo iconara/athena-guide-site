@@ -7,11 +7,6 @@
       :key="article.path"
       class="article"
     >
-      <span
-        v-if="showDates"
-        class="date"
-        v-text="article.isoDate"
-      />
       <nuxt-link
         :to="{name: 'articles-slug', params: {slug: article.slug}}"
         class="title"
@@ -26,12 +21,6 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  props: {
-    showDates: {
-      type: Boolean,
-      default: false,
-    },
-  },
   async fetch () {
     this.loading = true
     try {
