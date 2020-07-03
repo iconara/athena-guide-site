@@ -5,7 +5,7 @@ import MarkdownMode from 'frontmatter-markdown-loader/mode'
 export default {
   mode: 'universal',
   head: {
-    title: 'The Athena Guide',
+    titleTemplate: '%s | The Athena Guide',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no'},

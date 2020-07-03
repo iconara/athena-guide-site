@@ -37,6 +37,7 @@ export default Vue.extend({
     this.displayDate = article.isoDate
     this.copyrightYear = article.copyrightYear
     this.body = article.body
+    this.preamble = article.preamble
   },
   data () {
     return {
@@ -45,6 +46,15 @@ export default Vue.extend({
       author: undefined as unknown as string | undefined,
       displayDate: '',
       body: '',
+      preamble: '',
+    }
+  },
+  head () {
+    return {
+      title: `${this.title} | The Athena Guide`,
+      meta: [
+        {hid: 'description', name: 'description', content: this.preamble},
+      ],
     }
   },
 })

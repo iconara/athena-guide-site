@@ -1,7 +1,7 @@
 {
   "name": "athena-guide",
   "version": "1.0.0",
-  "description": "athena-guide",
+  "description": "This guide explains the not so obvious aspects of how to use Amazon Athena to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.",
   "author": "Theo Tolv",
   "private": true,
   "scripts": {

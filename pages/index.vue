@@ -41,6 +41,12 @@ export default Vue.extend({
     Logo,
     ArticleList,
   },
+  head () {
+    return {
+      title: 'The Athena Guide',
+      titleTemplate: null,
+    }
+  },
 })
 </script>
 

@@ -34,5 +34,10 @@ export default Vue.extend({
       about: null as unknown as Article,
     }
   },
+  head () {
+    return {
+      title: 'About',
+    }
+  },
 })
 </script>
