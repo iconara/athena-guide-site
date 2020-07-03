@@ -1,9 +1,7 @@
 <template>
   <div class="articles">
-    <b-spinner v-if="loading"/>
     <div
       v-for="article in articles"
-      v-else
       :key="article.path"
       class="article"
     >
@@ -22,16 +20,10 @@ import Vue from 'vue'
 
 export default Vue.extend({
   async fetch () {
-    this.loading = true
-    try {
-      this.articles = await this.$store.dispatch('loadArticles')
-    } finally {
-      this.loading = false
-    }
+    this.articles = await this.$store.dispatch('loadArticles')
   },
   data () {
     return {
-      loading: false,
       articles: [],
     }
   },
