@@ -42,6 +42,10 @@ export default {
           vue: {
             root: 'markdown-body',
           },
+          markdownIt: {
+            typographer: true,
+            langPrefix: 'language-',
+          },
         },
       })
     },
