@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -euo pipefail
+
+HOSTING_REGION=us-east-2
+GITHUB_REPOSITORY_URL='https://github.com/iconara/athena-guide-site'
+
+if [[ -z ${GITHUB_TOKEN:-} ]]; then
+  github_token_parameter=''
+else
+  github_token_parameter="--parameter GitHubToken=$GITHUB_TOKEN"
+fi
+
+# shellcheck disable=SC2086
+cuffsert \
+  --region "$HOSTING_REGION" \
+  --verbose \
+  --parameter "GitHubRepositoryUrl=$GITHUB_REPOSITORY_URL" \
+  $github_token_parameter \
+  --name "athena-guide-site" \
+  'config/hosting.cfn.yml'
