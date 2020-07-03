@@ -70,3 +70,14 @@ Resources:
       BranchName: master
       AppId: !GetAtt AmplifySite.AppId
       EnableAutoBuild: true
+
+  AmplifyDomain:
+    Type: AWS::Amplify::Domain
+    Properties:
+      DomainName: athena.guide
+      AppId: !GetAtt AmplifySite.AppId
+      SubDomainSettings:
+        - Prefix: ''
+          BranchName: master
+        - Prefix: the
+          BranchName: master
