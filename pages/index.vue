@@ -13,7 +13,7 @@
         </p>
         <p>
           <nuxt-link :to="{name: 'about'}">
-            More about the guide &rarr;
+            Read more about the Athena Guide
           </nuxt-link>
         </p>
       </div>
@@ -23,7 +23,7 @@
     </template>
     <template v-slot:sidebar-content>
       <div>
-        <article-list/>
+        <article-list :show-about-link="false"/>
       </div>
     </template>
   </default-layout>

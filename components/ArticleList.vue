@@ -1,17 +1,20 @@
 <template>
   <div class="articles">
-    <div
+    <nuxt-link
       v-for="article in articles"
       :key="article.path"
-      class="article"
+      :to="{name: 'articles-slug', params: {slug: article.slug}}"
+      class="article-link"
+      :title="article.preamble"
+      v-text="article.title"
+    />
+    <nuxt-link
+      v-if="showAboutLink"
+      :to="{name: 'about'}"
+      class="about-link"
     >
-      <nuxt-link
-        :to="{name: 'articles-slug', params: {slug: article.slug}}"
-        class="title"
-        :title="article.preamble"
-        v-text="article.title"
-      />
-    </div>
+      About the Athena Guide
+    </nuxt-link>
   </div>
 </template>
 
@@ -19,6 +22,12 @@
 import Vue from 'vue'
 
 export default Vue.extend({
+  props: {
+    showAboutLink: {
+      type: Boolean,
+      default: true,
+    },
+  },
   async fetch () {
     this.articles = await this.$store.dispatch('loadArticles')
   },
@@ -31,11 +40,14 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.article {
+.article-link,
+.about-link {
+  display: block;
   margin-bottom: 0.5rem;
+  border: none;
+}
 
-  a {
-    border: none;
-  }
+.about-link {
+  margin-top: 1.5rem;
 }
 </style>

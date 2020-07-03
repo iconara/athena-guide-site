@@ -6,6 +6,11 @@
     <template v-slot:main-content>
       <div v-if="about" v-html="about.body"/> <!-- eslint-disable-line vue/no-v-html -->
     </template>
+    <template v-slot:sidebar-content>
+      <div>
+        <article-list :show-about-link="false"/>
+      </div>
+    </template>
   </default-layout>
 </template>
 
@@ -13,10 +18,12 @@
 import Vue from 'vue'
 import {Article} from '@/lib/articles'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
+import ArticleList from '@/components/ArticleList.vue'
 
 export default Vue.extend({
   components: {
     DefaultLayout,
+    ArticleList,
   },
   async fetch () {
     const about: Article = await this.$store.dispatch('loadAbout')
