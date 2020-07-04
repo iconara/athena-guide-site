@@ -4,6 +4,7 @@ import MarkdownMode from 'frontmatter-markdown-loader/mode'
 
 export default {
   mode: 'universal',
+  target: 'static',
   head: {
     titleTemplate: '%s | The Athena Guide',
     meta: [
