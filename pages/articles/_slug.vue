@@ -8,7 +8,8 @@
       </h1>
     </template>
     <template v-slot:main-content>
-      <div class="article">
+      <b-spinner v-if="loading"/>
+      <div v-else class="article">
         <div class="meta">
           <div class="date" v-text="displayDate"/>
           <div v-if="author" class="author">
@@ -31,13 +32,18 @@ export default Vue.extend({
     DefaultLayout,
   },
   async fetch () {
-    const article: Article = await this.$store.dispatch('loadArticle', this.$route.params.slug)
-    this.title = article.title
-    this.author = article.author
-    this.displayDate = article.isoDate
-    this.copyrightYear = article.copyrightYear
-    this.body = article.body
-    this.preamble = article.preamble
+    this.loading = true
+    try {
+      const article: Article = await this.$store.dispatch('loadArticle', this.$route.params.slug)
+      this.title = article.title
+      this.author = article.author
+      this.displayDate = article.isoDate
+      this.copyrightYear = article.copyrightYear
+      this.body = article.body
+      this.preamble = article.preamble
+    } finally {
+      this.loading = false
+    }
   },
   data () {
     return {
@@ -47,6 +53,7 @@ export default Vue.extend({
       displayDate: '',
       body: '',
       preamble: '',
+      loading: false,
     }
   },
   head () {
