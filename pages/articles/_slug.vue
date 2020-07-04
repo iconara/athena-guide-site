@@ -58,9 +58,9 @@ export default Vue.extend({
   },
   head () {
     return {
-      title: `${this.title} | The Athena Guide`,
+      title: (this as any).title,
       meta: [
-        {hid: 'description', name: 'description', content: this.preamble},
+        {hid: 'description', name: 'description', content: (this as any).preamble},
       ],
     }
   },

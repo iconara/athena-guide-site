@@ -45,7 +45,7 @@ export default Vue.extend({
     return {
       title: 'The Athena Guide',
       titleTemplate: null,
-    }
+    } as any
   },
 })
 </script>
