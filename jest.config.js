@@ -7,6 +7,7 @@ module.exports = {
   moduleFileExtensions: [
     'ts',
     'js',
+    'd.ts',
     'vue',
     'json',
   ],
@@ -19,5 +20,10 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue',
+    '<rootDir>/plugins/**/*.ts',
+    '<rootDir>/store/**/*.ts',
+  ],
+  setupFilesAfterEnv: [
+    'jest-extended',
   ],
 }
