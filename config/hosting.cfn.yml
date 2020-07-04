@@ -44,7 +44,9 @@ Resources:
           phases:
             build:
               commands:
-                - yarn install test generate
+                - yarn install
+                - yarn test
+                - yarn generate
           artifacts:
             baseDirectory: dist
             files:
