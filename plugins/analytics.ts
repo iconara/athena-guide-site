@@ -1,6 +1,11 @@
 import {Context} from '@nuxt/types'
 import {Route} from 'vue-router'
 
+const FORWARD_PARAMETERS = [
+  'utm_source',
+  'utm_campaign',
+]
+
 function compileParameters (route: Route, doc: Document): string {
   const pairs = [
     `t=${Date.now()}`,
@@ -10,11 +15,11 @@ function compileParameters (route: Route, doc: Document): string {
   if (!referrer.includes(`//${doc.location.host}/`)) {
     pairs.push(`referrer=${encodeURIComponent(referrer)}`)
   }
-  const source = route.query.utm_source
-  if (source) {
-    const s = Array.isArray(source) ? source[source.length - 1] : source
-    if (s) {
-      pairs.push(`utm_source=${encodeURIComponent(s)}`)
+  for (const parameterName of FORWARD_PARAMETERS) {
+    const value = route.query[parameterName]
+    if (value) {
+      const s = Array.isArray(value) ? value[value.length - 1]! : value
+      pairs.push(`${parameterName}=${encodeURIComponent(s)}`)
     }
   }
   return pairs.join('&')

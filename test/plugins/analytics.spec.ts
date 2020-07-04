@@ -1,5 +1,6 @@
 import {Context} from '@nuxt/types'
 import {def, get} from 'bdd-lazy-var'
+import each from 'jest-each'
 import analytics from '~/plugins/analytics'
 
 describe('analytics', () => {
@@ -128,44 +129,47 @@ describe('analytics', () => {
       })
     })
 
-    describe('when an utm_source parameter is found on the route', () => {
+    each([
+      'source',
+      'campaign',
+    ]).describe('when an utm_%s parameter is found on the route', (parameterName) => {
       def('query', () => {
         return {
-          utm_source: 'the source',
+          [`utm_${parameterName}`]: `the ${parameterName}`,
         }
       })
 
       it('includes the (escaped) parameter value', () => {
         const src = get('src')
-        const [, source] = src.match(/utm_source=([^&]+)/)
-        expect(source).toBe('the%20source')
+        const [, value] = src.match(new RegExp(`utm_${parameterName}=([^&]+)`))
+        expect(value).toBe(`the%20${parameterName}`)
       })
 
       describe('and the parameter is empty', () => {
         def('query', () => {
           return {
-            utm_source: '',
+            [`utm_${parameterName}`]: '',
           }
         })
 
         it('does not include the parameter', () => {
           const src = get('src')
-          expect(src).not.toMatch(/utm_source=/)
+          expect(src).not.toInclude(`${parameterName}=`)
         })
       })
 
       describe('and there are multiple values', () => {
         def('query', () => {
           return {
-            utm_source: ['1', '2', '3'],
+            [`utm_${parameterName}`]: ['1', '2', '3'],
           }
         })
 
         it('includes only the last value', () => {
           const src = get('src')
-          const [, source] = src.match(/utm_source=([^&]+)/)
-          expect(source).toBe('3')
-          expect(src.match(/utm_source=/g).length).toBe(1)
+          const [, value] = src.match(new RegExp(`utm_${parameterName}=([^&]+)`))
+          expect(value).toBe('3')
+          expect(src.match(new RegExp(`utm_${parameterName}=`, 'g')).length).toBe(1)
         })
       })
     })
