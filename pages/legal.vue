@@ -17,6 +17,10 @@
         The purpose of the data collection is to understand what content is most popular, and how visitors
         like you find this guide.
       </p>
+      <h2>Affiliation</h2>
+      <p>
+        This site is not affiliated with Amazon, AWS, or any other company.
+      </p>
       <h2>Contact information</h2>
       <p>
         If you have any concerns, or questions about this site or the privacy policy above, please contact
