@@ -17,7 +17,7 @@ export default {
       {rel: 'icon', href: '/favicon.svg'},
       {rel: 'mask-icon', href: '/favicon.svg', color: '#000000'},
       {rel: 'apple-touch-icon', href: '/apple-touch-icon.png'},
-      {rel: 'manifest', href: 'manifest.json'},
+      {rel: 'manifest', href: '/manifest.json'},
       {rel: 'stylesheet', href: 'https://use.typekit.net/kbt8opn.css'},
     ],
   },
