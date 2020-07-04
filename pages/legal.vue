@@ -17,6 +17,11 @@
         The purpose of the data collection is to understand what content is most popular, and how visitors
         like you find this guide.
       </p>
+      <h2>Contact information</h2>
+      <p>
+        If you have any concerns, or questions about this site or the privacy policy above, please contact
+        <a href="mailto:the@athena.guide">the@athena.guide</a>.
+      </p>
     </template>
   </default-layout>
 </template>
