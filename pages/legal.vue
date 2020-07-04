@@ -1,0 +1,38 @@
+<template>
+  <default-layout>
+    <template v-slot:main-header>
+      <h1>Legal</h1>
+    </template>
+    <template v-slot:main-content>
+      <h2>Privacy Policy</h2>
+      <p>
+        When you browse this site data is collected about the pages you visit, and if you didn't type
+        the address directly into the browser, also about where you came from. The data collected does
+        _not_ include any personal data, except for your IP address, which, due to the nature of the
+        internet and the way the site is hosted, is very hard to avoid recording. Efforts are made to
+        make sure that the IP address is stored for as short a time as possible. No cookies are stored
+        in your browser, and no attempt is made to uniquely identify you as a visitor.
+      </p>
+      <p>
+        The purpose of the data collection is to understand what content is most popular, and how visitors
+        like you find this guide.
+      </p>
+    </template>
+  </default-layout>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+import DefaultLayout from '@/components/layout/DefaultLayout.vue'
+
+export default Vue.extend({
+  components: {
+    DefaultLayout,
+  },
+  head () {
+    return {
+      title: 'Privacy',
+    }
+  },
+})
+</script>
