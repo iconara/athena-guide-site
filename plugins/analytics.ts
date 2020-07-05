@@ -12,7 +12,7 @@ function compileParameters (route: Route, doc: Document): string {
     `path=${encodeURIComponent(route.path)}`,
   ]
   const referrer = doc.referrer
-  if (!referrer.includes(`//${doc.location.host}/`)) {
+  if (referrer.length > 0 && !referrer.includes(`//${doc.location.host}/`)) {
     pairs.push(`referrer=${encodeURIComponent(referrer)}`)
   }
   for (const parameterName of FORWARD_PARAMETERS) {

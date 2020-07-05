@@ -129,6 +129,17 @@ describe('analytics', () => {
       })
     })
 
+    describe('when the referrer is blank', () => {
+      def('referrer', () => {
+        return ''
+      })
+
+      it('does not include the referrer as a parameter', () => {
+        const src = get('src')
+        expect(src).not.toInclude('referrer=')
+      })
+    })
+
     each([
       'source',
       'campaign',
