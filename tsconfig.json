@@ -24,14 +24,24 @@
       ]
     },
     "types": [
+      "@nuxt/types",
+      "@types/jest",
       "@types/node",
       "@types/webpack-env",
-      "@nuxt/types"
+      "jest-extended"
     ]
   },
   "exclude": [
     "node_modules",
     ".nuxt",
     "dist"
-  ]
+  ],
+  "include": [
+    "components/**/*.vue",
+    "lib/**/*.ts",
+    "pages/**/*.vue",
+    "plugins/**/*.ts",
+    "test/**/*.ts",
+    "node_modules/bdd-lazy-var/index.d.ts"
+  ],
 }

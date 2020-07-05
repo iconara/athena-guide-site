@@ -32,6 +32,9 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/style-resources',
   ],
+  plugins: [
+    {src: '~/plugins/analytics.ts', mode: 'client'},
+  ],
   build: {
     extend (config, _ctx) {
       config.module.rules.push({

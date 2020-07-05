@@ -73,6 +73,13 @@ Resources:
       AppId: !GetAtt AmplifySite.AppId
       EnableAutoBuild: true
 
+  AmplifyStagingBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      BranchName: staging
+      AppId: !GetAtt AmplifySite.AppId
+      EnableAutoBuild: true
+
   AmplifyDomain:
     Type: AWS::Amplify::Domain
     Properties:
@@ -83,3 +90,23 @@ Resources:
           BranchName: master
         - Prefix: the
           BranchName: master
+
+  GSuiteRecords:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneName: athena.guide.
+      RecordSets:
+        - Name: athena.guide.
+          Type: TXT
+          TTL: '300'
+          ResourceRecords:
+            - '"google-site-verification=fwCsjkrgsTB7xARFI8tSgML-kP_S1K-TVjpS2cNbxrk"'
+        - Name: athena.guide.
+          Type: MX
+          TTL: '300'
+          ResourceRecords:
+            - '1 aspmx.l.google.com.'
+            - '5 alt1.aspmx.l.google.com.'
+            - '5 alt2.aspmx.l.google.com.'
+            - '10 aspmx2.googlemail.com.'
+            - '10 aspmx3.googlemail.com.'
