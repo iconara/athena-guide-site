@@ -73,6 +73,13 @@ Resources:
       AppId: !GetAtt AmplifySite.AppId
       EnableAutoBuild: true
 
+  AmplifyStagingBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      BranchName: staging
+      AppId: !GetAtt AmplifySite.AppId
+      EnableAutoBuild: true
+
   AmplifyDomain:
     Type: AWS::Amplify::Domain
     Properties:
