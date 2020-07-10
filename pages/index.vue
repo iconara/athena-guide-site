@@ -11,11 +11,6 @@
         <p>
           Athena is a serverless query service for data on S3, but there is a lot behind that description. Here you will find articles that explain the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.
         </p>
-        <p>
-          <nuxt-link :to="{name: 'about'}">
-            Read more about the Athena Guide
-          </nuxt-link>
-        </p>
       </div>
     </template>
     <template v-slot:sidebar-header>
@@ -23,7 +18,7 @@
     </template>
     <template v-slot:sidebar-content>
       <div>
-        <article-list :show-about-link="false"/>
+        <article-list/>
       </div>
     </template>
   </default-layout>
