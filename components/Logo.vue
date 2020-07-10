@@ -46,6 +46,7 @@ h1 {
   position: relative;
   left: -0.2em;
   user-select: none;
+  white-space: nowrap;
 
   .the {
     font-size: 50%;
@@ -62,7 +63,7 @@ h1 {
 
 h2 {
   font-size: 200%;
-  margin-top: 0.2em;
+  margin-top: 0.3em;
   font-weight: 500;
   font-style: italic;
   position: relative;
