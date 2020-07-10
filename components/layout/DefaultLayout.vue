@@ -58,21 +58,20 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.corner-logo {
-  position: absolute;
-  top: 3rem;
-  right: 2rem;
-  font-size: 6px;
-}
-
 main {
-  width: 100%;
   display: grid;
-  padding-top: 7rem;
   grid-template-columns: 35rem 23vw;
   grid-template-rows: 15rem auto;
   row-gap: 1rem;
   column-gap: 12vw;
+  margin: 8rem 2rem 8rem 5rem;
+
+  .corner-logo {
+    position: absolute;
+    top: 3rem;
+    right: 0.5rem;
+    font-size: 6px;
+  }
 
   .main-header {
     grid-column: 1;
@@ -92,36 +91,60 @@ main {
     align-self: end;
   }
 
-.sidebar-content {
+  .sidebar-content {
     grid-column: 2;
     grid-row: 2;
   }
-}
 
-footer {
-  margin-top: 4rem;
-  font-size: 80%;
+  footer {
+    grid-column: 1;
+    grid-row: 4;
+    margin-top: 4rem;
+    font-size: 80%;
+  }
 }
 
 @media all and (max-width: 959px) {
   main {
-    .sidebar-header {
-      grid-column: 1;
-      grid-row: 3;
-      align-self: flex-end;
+    margin: 12rem 0rem 8rem 3rem;
+    display: block;
+    width: 80%;
+
+    .corner-logo {
+      position: absolute;
+      top: 2rem;
+      right: 1rem;
+      font-size: 5px;
     }
 
-    .sidebar-content {
-      grid-column: 1;
-      grid-row: 4
+    .main-header {
+      width: 100%;
+    }
+
+    .sidebar-header {
+      border-top: 1px solid #ccc;
+      margin-top: 3rem;
+      padding-top: 3rem;
     }
   }
 }
 
-@media all and (max-width: 799px) {
+@media all and (max-width: 699px) {
   main {
+    margin: 10rem 3rem 8rem 1.5rem;
     grid-template-columns: 70vw auto;
     grid-template-rows: 8rem auto;
+
+    .corner-logo {
+      position: absolute;
+      top: 3rem;
+      right: 2rem;
+      font-size: 2.5px;
+    }
+
+    footer {
+      grid-row: 5;
+    }
   }
 }
 </style>

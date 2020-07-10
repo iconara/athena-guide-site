@@ -58,7 +58,7 @@ export default Vue.extend({
 
 @media all and (max-width: 799px) {
   .logo {
-    font-size: 60%;
+    font-size: 2vw;
   }
 }
 </style>
