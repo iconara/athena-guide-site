@@ -6,9 +6,19 @@ const FORWARD_PARAMETERS = [
   'utm_campaign',
 ]
 
-function compileParameters (route: Route, doc: Document): string {
+function generateSessionId () {
+  const n = Math.floor((36 ** 6) * Math.random())
+  let s = n.toString(36)
+  for (let i = s.length; i < 6; i++) {
+    s = '0' + s
+  }
+  return s.substring(0, 6)
+}
+
+function compileParameters (route: Route, sessionId: string, doc: Document): string {
   const pairs = [
     `t=${Date.now()}`,
+    `sid=${sessionId}`,
     `path=${encodeURIComponent(route.path)}`,
   ]
   const referrer = doc.referrer
@@ -25,8 +35,8 @@ function compileParameters (route: Route, doc: Document): string {
   return pairs.join('&')
 }
 
-function reportNavigation (to: Route, _from: Route, doc: Document = document) {
-  const src = `/analytics.js?${compileParameters(to, doc)}`
+function reportNavigation (to: Route, sessionId: string, doc: Document = document) {
+  const src = `/analytics.js?${compileParameters(to, sessionId, doc)}`
   const script = doc.createElement('script')
   script.setAttribute('src', src)
   script.setAttribute('async', 'async')
@@ -35,5 +45,6 @@ function reportNavigation (to: Route, _from: Route, doc: Document = document) {
 }
 
 export default (ctx: Context) => {
-  ctx.app.router!.afterEach(reportNavigation)
+  const sessionId = generateSessionId()
+  ctx.app.router!.afterEach((to: Route, _from: Route, doc?: Document) => reportNavigation(to, sessionId, doc || document))
 }
