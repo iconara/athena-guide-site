@@ -1,12 +1,14 @@
 <template>
-  <main>
-    <logo
-      v-if="includeLogo"
-      class="corner-logo"
-      :tagline="false"
-      :multiline="true"
-      :backlink="true"
-    />
+  <div class="default-layout">
+    <header>
+      <logo
+        v-if="includeLogo"
+        class="corner-logo"
+        :tagline="false"
+        :multiline="true"
+        :backlink="true"
+      />
+    </header>
     <section class="main-header">
       <slot name="main-header"/>
     </section>
@@ -27,7 +29,7 @@
       &copy; {{copyrightYear}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
       – <nuxt-link :to="{name: 'legal'}">Legal</nuxt-link>
     </footer>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
@@ -58,92 +60,89 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-main {
+.default-layout {
   display: grid;
-  grid-template-columns: 35rem 23vw;
-  grid-template-rows: 15rem auto;
+  grid-template: auto 1fr auto / minmax(50ch, 90ch) minmax(25ch, 40ch);
   row-gap: 1rem;
   column-gap: 12vw;
-  margin: 8rem 2rem 8rem 5rem;
+  margin: 5rem 5rem 8rem 5rem;
 
-  .corner-logo {
-    position: absolute;
-    top: 3rem;
-    right: 0.5rem;
-    font-size: 6px;
+  header {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    margin-bottom: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .corner-logo {
+      font-size: 6px;
+    }
+  }
+
+  footer {
+    grid-column: 1 / 3;
+    grid-row: 4;
+    margin-top: 2rem;
+  }
+
+  .main-header,
+  .sidebar-header {
+    grid-row: 2;
+    align-self: flex-end;
   }
 
   .main-header {
     grid-column: 1;
-    grid-row: 1;
-    align-self: end;
-    width: 125%;
   }
 
   .main-content {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
   }
 
   .sidebar-header {
     grid-column: 2;
-    grid-row: 1;
-    align-self: end;
   }
 
   .sidebar-content {
     grid-column: 2;
-    grid-row: 2;
-  }
-
-  footer {
-    grid-column: 1;
-    grid-row: 4;
-    margin-top: 4rem;
-    font-size: 80%;
+    grid-row: 3;
   }
 }
 
 @media all and (max-width: 959px) {
-  main {
-    margin: 12rem 0rem 8rem 3rem;
-    display: block;
-    width: 80%;
+  .default-layout {
+    display: flex;
+    flex-direction: column;
 
-    .corner-logo {
-      position: absolute;
-      top: 2rem;
-      right: 1rem;
-      font-size: 5px;
-    }
-
-    .main-header {
-      width: 100%;
+    .main-header,
+    .sidebar-header {
+      align-self: inherit;
     }
 
     .sidebar-header {
       border-top: 1px solid #ccc;
-      margin-top: 3rem;
+      margin-top: 2rem;
       padding-top: 3rem;
+    }
+
+    .sidebar-content {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 2rem;
+      padding-bottom: 3rem;
     }
   }
 }
 
-@media all and (max-width: 699px) {
-  main {
-    margin: 10rem 3rem 8rem 1.5rem;
-    grid-template-columns: 70vw auto;
-    grid-template-rows: 8rem auto;
+@media all and (max-width: 599px) {
+  .default-layout {
+    margin: 3rem 2rem 8rem 1.5rem;
 
-    .corner-logo {
-      position: absolute;
-      top: 3rem;
-      right: 2rem;
-      font-size: 2.5px;
-    }
-
-    footer {
-      grid-row: 5;
+    header {
+      .corner-logo {
+        font-size: 4px;
+      }
     }
   }
 }
