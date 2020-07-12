@@ -67,6 +67,7 @@ h2 {
   font-weight: 500;
   font-style: italic;
   position: relative;
+  white-space: nowrap;
 }
 
 a {
