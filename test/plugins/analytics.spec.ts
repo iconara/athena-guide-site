@@ -67,6 +67,22 @@ describe('analytics', () => {
       return script.setAttribute.mock.calls[0][1]
     })
 
+    def('srcs', () => {
+      const ctx: Context = get('ctx')
+      analytics(ctx)
+      const hook = get('afterEach').mock.calls[0][0]
+      const doc = get('doc')
+      hook(get('route'), null, doc)
+      hook(get('route'), null, doc)
+      hook(get('route'), null, doc)
+      const script = get('script')
+      return [
+        script.setAttribute.mock.calls[0][1],
+        script.setAttribute.mock.calls[2][1],
+        script.setAttribute.mock.calls[4][1],
+      ]
+    })
+
     it('creates a script tag', () => {
       get('src')
       const doc = get('doc')
@@ -105,6 +121,19 @@ describe('analytics', () => {
       expect(Date.now() - parseInt(t)).toBeLessThan(5000)
     })
 
+    it('includes a session ID as a parameter', () => {
+      const src = get('src')
+      const [, sid] = src.match(/sid=([^&]+)/)
+      expect(sid).toMatch(/^[\d\w]{6}$/)
+    })
+
+    it('includes the same session ID as a parameter for every request', () => {
+      const srcs = get('srcs')
+      const sids = srcs.map((src: string) => src.match(/sid=([^&]+)/)![1])
+      expect(sids[0]).toBe(sids[1])
+      expect(sids[1]).toBe(sids[2])
+    })
+
     it('includes the (escaped) route path as a parameter', () => {
       const src = get('src')
       const [, path] = src.match(/path=([^&]+)/)
@@ -114,7 +143,7 @@ describe('analytics', () => {
     it('does not include any other parameters', () => {
       const src = get('src')
       const parameters = src.split('?')[1].split('&').map((s: string) => s.split('=')[0])
-      expect(parameters).toIncludeSameMembers(['t', 'path'])
+      expect(parameters).toIncludeSameMembers(['t', 'sid', 'path'])
     })
 
     describe('when the referrer is from another domain', () => {

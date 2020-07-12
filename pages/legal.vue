@@ -9,9 +9,13 @@
         When you browse this site data is collected about the pages you visit, and if you didn’t type
         the address directly into the browser, also about where you came from. The data collected does
         <em>not</em> include any personal data, except for your IP address, which, due to the nature of the
-        internet and the way the site is hosted, is very hard to avoid recording. Efforts are made to
-        make sure that the IP address is stored for as short a time as possible. No cookies are stored
-        in your browser, and no attempt is made to uniquely identify you as a visitor.
+        internet and the way the site is hosted, is very hard to avoid recording. Efforts are made to make
+        sure that the IP address is stored for as short a time as possible.
+      </p>
+      <p>
+        A session ID is generated for every visit, but is stored only in memory and is therefore reset when
+        you reload the page. No cookies are stored in your browser, and no attempt is made to uniquely
+        identify you between visits.
       </p>
       <p>
         The purpose of the data collection is to understand what content is most popular, and how visitors
