@@ -21,7 +21,7 @@ export class Article implements ArticleMeta {
     this.slug = slug
     this.date = moment(date)
     this.author = author
-    this.body = body.replace(/<h1>.+?<\/h1>/, '')
+    this.body = body.replace(/<h1[^>]+>.+?<\/h1>/, '')
   }
 
   get preamble (): string {

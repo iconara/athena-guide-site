@@ -1,6 +1,11 @@
 import path from 'path'
 import glob from 'glob'
 import MarkdownMode from 'frontmatter-markdown-loader/mode'
+import markdownIt from 'markdown-it'
+import markdownItAnchor from 'markdown-it-anchor'
+import uslug from 'uslug'
+
+markdownItAnchor.defaults.slugify = uslug
 
 export default {
   mode: 'universal',
@@ -46,10 +51,10 @@ export default {
           vue: {
             root: 'markdown-body',
           },
-          markdownIt: {
+          markdownIt: markdownIt({
             typographer: true,
             langPrefix: 'language-',
-          },
+          }).use(markdownItAnchor),
         },
       })
     },
