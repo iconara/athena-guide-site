@@ -11,11 +11,11 @@ Coming from traditional databases to Athena can be a little bit confusing. In mo
 
 There are at least five ways you can add partitions to Athena. Technically, all but one boil down to the same thing under the hood, but they can still be more or less convenient to use in different situations. Here are the five:
 
-* Partition projection
-* Using SQL with Athena
-* MSCK REPAIR TABLE
-* Using the Glue Data Catalog API
-* Using a Glue Crawler
+* [Partition projection](#partition-projection)
+* [Using SQL with Athena](#using-sql-with-athena)
+* [MSCK REPAIR TABLE](#msck-repair-table)
+* [Using the Glue Data Catalog API](#using-the-glue-data-catalog-api)
+* [Using a Glue Crawler](#glue-crawlers)
 
 ## Partition Projection
 
@@ -82,7 +82,7 @@ The problem is that crawlers try to be very general, with very limited configura
 
 If your data uses [Hive style partitioning](/articles/hive-style-partitioning), and it's schema doesn't evolve in drastic ways, you can probably use a crawler. There are definitely cases when it's less work to set up a crawler than, for example, creating a Lambda function that does a Glue Data Catalog API call in response to an S3 notification. In all my time working with Athena I have not found a case where Glue Crawlers felt like the right solution. I have used them, before [Partition Projection](https://docs.aws.amazon.com/athena/latest/ug/partition-projection.html), as the least complicated way to keep tables for my [Cost and Usage Reports](https://docs.aws.amazon.com/cur/latest/userguide/use-athena-cf.html) up to date, for example.
 
-There is an endless stream of questions on Stack Overflow from people who have problems getting Glue Crawlers to work for them. When the use case doesn't fit what Glue Crawlers were designed for (an unfortunately not publicly defined scope), you get surprising results like [thousands of tables being created](https://stackoverflow.com/questions/54332699/aws-glue-crawler-need-to-create-one-table-from-many-files-with-identical-schemas), [unusable tables](https://stackoverflow.com/questions/46241088/how-to-create-aws-glue-table-where-partitions-have-different-columns-hive-par), [table schemas flip-floping](https://stackoverflow.com/questions/61297671/querying-optional-nested-json-fields-in-athena), and so on, and so forth.
+There is an endless stream of questions on Stack Overflow from people who have problems getting Glue Crawlers to work for them. When the use case doesn't fit what Glue Crawlers were designed for (an unfortunately not publicly defined scope), you get surprising results like [thousands of tables being created](https://stackoverflow.com/q/54332699/1109), [unusable tables](https://stackoverflow.com/q/46241088/1109), [table schemas flip-floping](https://stackoverflow.com/q/61297671/1109), and so on, and so forth.
 
 ## Summary
 
