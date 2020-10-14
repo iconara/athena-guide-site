@@ -59,9 +59,6 @@ export default {
       })
     },
   },
-  generate: {
-    routes: glob.sync('articles/**/*.md', {cwd: 'content'}).map((p) => p.replace(/\.md$/, '')),
-  },
   bootstrapVue: {
     icons: true,
   },
