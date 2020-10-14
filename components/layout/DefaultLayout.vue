@@ -1,6 +1,6 @@
 <template>
   <div class="default-layout">
-    <header>
+    <nav>
       <logo
         v-if="includeLogo"
         class="corner-logo"
@@ -8,23 +8,23 @@
         :multiline="true"
         :backlink="true"
       />
-    </header>
-    <section class="main-header">
+    </nav>
+    <header class="main-header">
       <slot name="main-header"/>
-    </section>
-    <section class="main-content">
+    </header>
+    <article class="main-content">
       <slot name="main-content"/>
-    </section>
-    <section class="sidebar-header">
+    </article>
+    <aside class="sidebar-header">
       <slot name="sidebar-header">
         <h2>All articles</h2>
       </slot>
-    </section>
-    <section class="sidebar-content">
+    </aside>
+    <aside class="sidebar-content">
       <slot name="sidebar-content">
         <article-list/>
       </slot>
-    </section>
+    </aside>
     <footer v-if="includeCopyright">
       &copy; {{copyrightYear}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
       – <nuxt-link :to="{path: '/legal/'}">Legal</nuxt-link>
@@ -67,7 +67,7 @@ export default Vue.extend({
   column-gap: 12vw;
   margin: 5rem 5rem 8rem 5rem;
 
-  header {
+  nav {
     grid-column: 1 / 3;
     grid-row: 1;
     margin-bottom: 6rem;
@@ -139,7 +139,7 @@ export default Vue.extend({
   .default-layout {
     margin: 3rem 2rem 8rem 1.5rem;
 
-    header {
+    nav {
       .corner-logo {
         font-size: 4px;
       }
