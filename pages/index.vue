@@ -13,9 +13,6 @@
         </p>
       </div>
     </template>
-    <template v-slot:sidebar-header>
-      <h2>Latest articles</h2>
-    </template>
     <template v-slot:sidebar-content>
       <div>
         <article-list/>

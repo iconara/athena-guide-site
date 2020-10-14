@@ -15,12 +15,8 @@
     <article class="main-content">
       <slot name="main-content"/>
     </article>
-    <aside class="sidebar-header">
-      <slot name="sidebar-header">
-        <h2>All articles</h2>
-      </slot>
-    </aside>
     <aside class="sidebar-content">
+      <h2>All articles</h2>
       <slot name="sidebar-content">
         <article-list/>
       </slot>
@@ -86,14 +82,10 @@ export default Vue.extend({
     margin-top: 2rem;
   }
 
-  .main-header,
-  .sidebar-header {
+  .main-header {
+    grid-column: 1 / 3;
     grid-row: 2;
     align-self: flex-end;
-  }
-
-  .main-header {
-    grid-column: 1;
   }
 
   .main-content {
@@ -101,13 +93,13 @@ export default Vue.extend({
     grid-row: 3;
   }
 
-  .sidebar-header {
-    grid-column: 2;
-  }
-
   .sidebar-content {
     grid-column: 2;
     grid-row: 3;
+
+    h2 {
+      margin-top: 0;
+    }
   }
 }
 
@@ -116,20 +108,16 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
 
-    .main-header,
-    .sidebar-header {
+    .main-header {
       align-self: inherit;
     }
 
-    .sidebar-header {
-      border-top: 1px solid #ccc;
-      margin-top: 2rem;
-      padding-top: 3rem;
-    }
-
     .sidebar-content {
+      border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
+      margin-top: 2rem;
       margin-bottom: 2rem;
+      padding-top: 3rem;
       padding-bottom: 3rem;
     }
   }
