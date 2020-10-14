@@ -91,6 +91,7 @@ export default Vue.extend({
     width: 110%;
     padding: 0.5rem;
     margin-left: -0.5rem;
+    overflow-x: auto;
   }
 }
 
