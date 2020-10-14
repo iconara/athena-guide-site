@@ -1,9 +1,13 @@
 <template>
   <div class="logo">
-    <h1 :style="{'text-align': (multiline ? 'center' : 'left'), 'cursor': (backlink ? 'pointer' : 'auto')}" @click="onClick">
+    <nuxt-link
+      tag="h1"
+      :to="{path: '/'}"
+      :style="{'text-align': (multiline ? 'center' : 'left'), 'cursor': (backlink ? 'pointer' : 'auto')}"
+    >
       <span class="the">The</span>
       Athena<br v-if="multiline"><span v-else class="space"/>Guide
-    </h1>
+    </nuxt-link>
     <h2 v-if="tagline">
       An in-depth guide to <a href="https://aws.amazon.com/athena/">Amazon Athena</a>.
     </h2>
@@ -26,13 +30,6 @@ export default Vue.extend({
     backlink: {
       type: Boolean,
       default: false,
-    },
-  },
-  methods: {
-    onClick () {
-      if (this.backlink) {
-        this.$router.push('/')
-      }
     },
   },
 })
