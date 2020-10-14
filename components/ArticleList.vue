@@ -3,14 +3,14 @@
     <nuxt-link
       v-for="article in articles"
       :key="article.path"
-      :to="{name: 'articles-slug', params: {slug: article.slug}}"
+      :to="{path: `/articles/${article.slug}/`}"
       class="article-link"
       :title="article.preamble"
       v-text="article.title"
     />
     <nuxt-link
       v-if="showAboutLink"
-      :to="{name: 'about'}"
+      :to="{path: '/about/'}"
       class="about-link"
     >
       About the Athena Guide
