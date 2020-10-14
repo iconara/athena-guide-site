@@ -11,6 +11,9 @@ export default {
   mode: 'universal',
   target: 'static',
   head: {
+    htmlAttrs: {
+      lang: 'en',
+    },
     titleTemplate: '%s | The Athena Guide',
     meta: [
       {charset: 'utf-8'},
