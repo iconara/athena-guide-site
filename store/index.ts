@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex, {MutationTree, ActionTree, GetterTree} from 'vuex'
-import moment from 'moment'
 import {Article, ArticleMeta} from '@/lib/articles'
 
 Vue.use(Vuex)
@@ -24,7 +23,7 @@ export const actions: ActionTree<State, State> = {
         return new Article(
           rawArticle.attributes.title,
           slug,
-          moment(rawArticle.attributes.date),
+          new Date(rawArticle.attributes.date),
           rawArticle.attributes.author,
           rawArticle.html,
         )
@@ -38,7 +37,7 @@ export const actions: ActionTree<State, State> = {
     return new Article(
       title,
       undefined,
-      moment(date),
+      new Date(date),
       author,
       rawArticle.html,
     )
@@ -49,7 +48,7 @@ export const actions: ActionTree<State, State> = {
     return new Article(
       title,
       undefined,
-      moment(date),
+      new Date(date),
       author,
       rawArticle.html,
     )
