@@ -8,15 +8,13 @@
       </h1>
     </template>
     <template v-slot:main-content>
-      <div v-if="!loading" class="article">
-        <div class="meta">
-          <div class="date" v-text="displayDate"/>
-          <div v-if="author" class="author">
-            by <span class="name">{{author}}</span>
-          </div>
+      <div class="meta">
+        <div class="date" v-text="displayDate"/>
+        <div v-if="author" class="author">
+          by <span class="name">{{author}}</span>
         </div>
-        <div class="body" v-html="body"/> <!-- eslint-disable-line vue/no-v-html -->
       </div>
+      <div class="body" v-html="body"/> <!-- eslint-disable-line vue/no-v-html -->
     </template>
   </default-layout>
 </template>
@@ -70,44 +68,38 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.article {
-  .meta {
-    margin-bottom: 0.5rem;
+.meta {
+  margin-bottom: 0.5rem;
 
-    .date {
-      display: inline;
-    }
+  .date {
+    display: inline;
+  }
 
-    .author {
-      display: inline;
+  .author {
+    display: inline;
 
-      .name {
-        font-style: italic;
-      }
+    .name {
+      font-style: italic;
     }
   }
 }
 </style>
 
 <style lang="scss">
-.article {
-  .body {
-    pre {
-      width: 110%;
-      padding: 0.5rem;
-      margin-left: -0.5rem;
-    }
+.body {
+  pre {
+    width: 110%;
+    padding: 0.5rem;
+    margin-left: -0.5rem;
   }
 }
 
 @media all and (max-width: 959px) {
-  .article {
-    .body {
-      pre {
-        width: 100%;
-        padding: 0.5rem;
-        margin-left: -0.5rem;
-      }
+  .body {
+    pre {
+      width: 100%;
+      padding: 0.5rem;
+      margin-left: -0.5rem;
     }
   }
 }
