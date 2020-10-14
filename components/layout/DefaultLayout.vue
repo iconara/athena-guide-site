@@ -60,16 +60,16 @@ export default Vue.extend({
   display: grid;
   grid-template: auto 1fr auto / minmax(50ch, 90ch) minmax(25ch, 40ch);
   row-gap: 1rem;
-  column-gap: 12vw;
+  column-gap: 10ch;
   margin: 5rem 5rem 8rem 5rem;
 
   nav {
-    grid-column: 1 / 3;
+    grid-column: 2;
     grid-row: 1;
     margin-bottom: 6rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
 
     .corner-logo {
       font-size: 6px;
@@ -99,6 +99,7 @@ export default Vue.extend({
 
     h2 {
       margin-top: 0;
+      margin-bottom: 0.6em;
     }
   }
 }
@@ -107,6 +108,10 @@ export default Vue.extend({
   .default-layout {
     display: flex;
     flex-direction: column;
+
+    nav {
+      align-items: flex-end;
+    }
 
     .main-header {
       align-self: inherit;

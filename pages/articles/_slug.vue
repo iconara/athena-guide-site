@@ -14,7 +14,11 @@
           by <span class="name">{{author}}</span>
         </div>
       </div>
-      <div class="body" v-html="body"/> <!-- eslint-disable-line vue/no-v-html -->
+      <div
+        v-if="body"
+        class="body"
+        v-html="body"
+      /> <!-- eslint-disable-line vue/no-v-html -->
     </template>
   </default-layout>
 </template>
@@ -69,7 +73,7 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .meta {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1em;
 
   .date {
     display: inline;
@@ -80,25 +84,6 @@ export default Vue.extend({
 
     .name {
       font-style: italic;
-    }
-  }
-}
-</style>
-
-<style lang="scss">
-.body {
-  pre {
-    width: 110%;
-    padding: 0.5rem;
-    margin-left: -0.5rem;
-    overflow-x: auto;
-  }
-}
-
-@media all and (max-width: 959px) {
-  .body {
-    pre {
-      width: 100%;
     }
   }
 }

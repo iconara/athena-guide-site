@@ -4,7 +4,11 @@
       <h1>About the Athena Guide</h1>
     </template>
     <template v-slot:main-content>
-      <div v-if="about" v-html="about.body"/> <!-- eslint-disable-line vue/no-v-html -->
+      <div
+        v-if="about"
+        class="body"
+        v-html="about.body"
+      /> <!-- eslint-disable-line vue/no-v-html -->
     </template>
     <template v-slot:sidebar-content>
       <div>
