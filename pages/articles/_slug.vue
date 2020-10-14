@@ -62,6 +62,9 @@ export default Vue.extend({
       meta: [
         {hid: 'description', name: 'description', content: (this as any).preamble},
       ],
+      link: [
+        {hid: 'canonical', rel: 'canonical', href: `${process.env.baseUrl}/articles/${this.$route.params.slug}/`},
+      ],
     }
   },
 })
