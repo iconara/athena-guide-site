@@ -37,7 +37,6 @@ export default {
     '@nuxt/typescript-build',
   ],
   modules: [
-    'bootstrap-vue/nuxt',
     '@nuxtjs/style-resources',
   ],
   plugins: [

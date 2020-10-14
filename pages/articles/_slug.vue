@@ -8,8 +8,7 @@
       </h1>
     </template>
     <template v-slot:main-content>
-      <b-spinner v-if="loading"/>
-      <div v-else class="article">
+      <div v-if="!loading" class="article">
         <div class="meta">
           <div class="date" v-text="displayDate"/>
           <div v-if="author" class="author">
