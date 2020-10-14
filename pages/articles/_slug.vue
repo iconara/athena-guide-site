@@ -99,8 +99,6 @@ export default Vue.extend({
   .body {
     pre {
       width: 100%;
-      padding: 0.5rem;
-      margin-left: -0.5rem;
     }
   }
 }
