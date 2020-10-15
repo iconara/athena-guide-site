@@ -9,7 +9,8 @@
         <nuxt-link
           :to="{path: `/articles/${article.slug}/`}"
           :title="article.preamble"
-          v-text="article.title"/>
+          v-text="article.title"
+          :class="{'current': isCurrent(article)}"/>
         <span
           v-if="!inline"
           v-text="articleControlText(article)"
@@ -23,7 +24,7 @@
           :key="child.path"
           :to="{path: `/articles/${child.slug}/`}"
           :title="child.preamble"
-          class="child"
+          :class="{'child': true, 'current': isCurrent(article, child)}"
           v-text="childTitle(article, child)"
         />
       </div>
@@ -75,7 +76,8 @@ export default Vue.extend({
       }
     },
     isExpanded (article: Article): boolean {
-      return this.expandedArticles.indexOf(article.slug!) > -1
+      const slug = this.$route.params.slug
+      return this.expandedArticles.indexOf(article.slug!) > -1 || article.children.some((a) => a.slug === slug)
     },
     childTitle (article: Article, child: Article): string {
       if (child.title.startsWith(article.title)) {
@@ -83,6 +85,14 @@ export default Vue.extend({
         return child.title.replace(r, '')
       } else {
         return child.title
+      }
+    },
+    isCurrent (article: Article, child?: Article): boolean {
+      const slug = this.$route.params.slug
+      if (child) {
+        return child.slug === slug
+      } else {
+        return article.slug === slug || article.children.some((a) => a.slug === slug)
       }
     },
   },
@@ -108,6 +118,18 @@ export default Vue.extend({
   .child {
     display: block;
     margin-left: 1em;
+
+    &.current {
+      margin-left: 0.2em;
+    }
+  }
+
+  .current {
+    margin-left: -0.8em;
+  }
+
+  .current::before {
+    content: "> ";
   }
 }
 
