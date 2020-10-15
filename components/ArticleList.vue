@@ -10,12 +10,13 @@
           :to="{path: `/articles/${article.slug}/`}"
           :title="article.preamble"
           v-text="article.title"
-          :class="{'current': isCurrent(article)}"/>
+          :class="{'current': isCurrent(article)}"
+        />
         <span
           v-if="!inline"
           v-text="articleControlText(article)"
           @click="toggleExpansion(article)"
-          class="series-toggle"
+          :class="{'series-toggle': true, 'current': isCurrent(article)}"
         />
       </span>
       <div v-if="!inline && isExpanded(article)">
@@ -76,8 +77,7 @@ export default Vue.extend({
       }
     },
     isExpanded (article: Article): boolean {
-      const slug = this.$route.params.slug
-      return this.expandedArticles.indexOf(article.slug!) > -1 || article.children.some((a) => a.slug === slug)
+      return this.isCurrent(article) || this.expandedArticles.indexOf(article.slug) > -1
     },
     childTitle (article: Article, child: Article): string {
       if (child.title.startsWith(article.title)) {
@@ -113,6 +113,10 @@ export default Vue.extend({
   .series-toggle {
     cursor: pointer;
     font-size: 120%;
+
+    &.current {
+      display: none;
+    }
   }
 
   .child {
