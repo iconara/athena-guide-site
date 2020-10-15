@@ -1,6 +1,7 @@
 <template>
   <default-layout
     :copyright-year="copyrightYear"
+    :includes-article-list="true"
   >
     <template v-slot:main-header>
       <h1>

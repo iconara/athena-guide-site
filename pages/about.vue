@@ -1,5 +1,7 @@
 <template>
-  <default-layout>
+  <default-layout
+    :includes-article-list="true"
+  >
     <template v-slot:main-header>
       <h1>About the Athena Guide</h1>
     </template>
@@ -9,11 +11,6 @@
         class="body"
         v-html="about.body"
       /> <!-- eslint-disable-line vue/no-v-html -->
-    </template>
-    <template v-slot:sidebar-content>
-      <div>
-        <article-list :show-about-link="false"/>
-      </div>
     </template>
   </default-layout>
 </template>

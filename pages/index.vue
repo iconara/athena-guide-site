@@ -12,11 +12,8 @@
           Athena is a serverless query service for data on S3, but there is a lot behind that description. Here you will find articles that explain the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.
         </p>
       </div>
-    </template>
-    <template v-slot:sidebar-content>
-      <div>
-        <article-list/>
-      </div>
+      <h2>Contents</h2>
+      <article-list/>
     </template>
   </default-layout>
 </template>
@@ -43,9 +40,23 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.more-articles {
-  display: block;
-  margin-top: 0.5rem;
+.articles {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  line-height: 200%;
+
+  /deep/ .article-link,
+  /deep/ .about-link {
+    margin: 0;
+    margin-right: 0.5em;
+    border: none;
+  }
+
+  /deep/ .article-link::after {
+    content: "/";
+    margin-left: 0.5em;
+  }
 }
 
 @media all and (max-width: 799px) {

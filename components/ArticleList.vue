@@ -1,5 +1,5 @@
 <template>
-  <div class="articles">
+  <nav class="articles">
     <nuxt-link
       v-for="article in articles"
       :key="article.path"
@@ -15,7 +15,7 @@
     >
       About the Athena Guide
     </nuxt-link>
-  </div>
+  </nav>
 </template>
 
 <script lang="ts">

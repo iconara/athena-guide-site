@@ -1,6 +1,6 @@
 <template>
   <div class="default-layout">
-    <nav>
+    <nav class="top">
       <logo
         v-if="includeLogo"
         class="corner-logo"
@@ -15,12 +15,13 @@
     <article class="main-content">
       <slot name="main-content"/>
     </article>
-    <aside class="sidebar-content">
+    <nav
+      v-if="includesArticleList"
+      class="article-list"
+    >
       <h2>All articles</h2>
-      <slot name="sidebar-content">
-        <article-list/>
-      </slot>
-    </aside>
+      <article-list/>
+    </nav>
     <footer v-if="includeCopyright">
       &copy; {{copyrightYear}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
       – <nuxt-link :to="{path: '/legal/'}">Legal</nuxt-link>
@@ -47,6 +48,10 @@ export default Vue.extend({
       type: Boolean,
       default: true,
     },
+    includesArticleList: {
+      type: Boolean,
+      default: false,
+    },
     copyrightYear: {
       type: Number,
       default: (new Date()).getUTCFullYear(),
@@ -63,7 +68,7 @@ export default Vue.extend({
   column-gap: 10ch;
   margin: 5rem 5rem 8rem 5rem;
 
-  nav {
+  nav.top {
     grid-column: 2;
     grid-row: 1;
     margin-bottom: 6rem;
@@ -93,7 +98,7 @@ export default Vue.extend({
     grid-row: 3;
   }
 
-  .sidebar-content {
+  .article-list {
     grid-column: 2;
     grid-row: 3;
 
@@ -109,7 +114,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
 
-    nav {
+    nav.top {
       align-items: flex-end;
     }
 
@@ -117,7 +122,7 @@ export default Vue.extend({
       align-self: inherit;
     }
 
-    .sidebar-content {
+    .article-list {
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
       margin-top: 2rem;
@@ -132,7 +137,7 @@ export default Vue.extend({
   .default-layout {
     margin: 3rem 2rem 8rem 1.5rem;
 
-    nav {
+    nav.top {
       .corner-logo {
         font-size: 4px;
       }
