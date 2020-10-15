@@ -11,20 +11,20 @@
           :title="article.preamble"
           v-text="article.title"/>
         <span
-          v-if="includeSubArticles"
+          v-if="includeChildren"
           v-text="articleControlText(article)"
           @click="toggleExpansion(article)"
           class="series-toggle"
         />
       </span>
-      <div v-if="includeSubArticles && isExpanded(article)">
+      <div v-if="includeChildren && isExpanded(article)">
         <nuxt-link
-          v-for="subArticle in article.subArticles"
-          :key="subArticle.path"
-          :to="{path: `/articles/${subArticle.slug}/`}"
-          :title="subArticle.preamble"
-          class="sub-article"
-          v-text="subArticleTitle(article, subArticle)"
+          v-for="child in article.children"
+          :key="child.path"
+          :to="{path: `/articles/${child.slug}/`}"
+          :title="child.preamble"
+          class="child"
+          v-text="childTitle(article, child)"
         />
       </div>
     </div>
@@ -50,7 +50,7 @@ export default Vue.extend({
       type: Boolean,
       default: true,
     },
-    includeSubArticles: {
+    includeChildren: {
       type: Boolean,
       default: true,
     },
@@ -66,7 +66,7 @@ export default Vue.extend({
   },
   methods: {
     articleControlText (article: Article): string {
-      if (article.subArticles.length > 0) {
+      if (article.children.length > 0) {
         return this.expandedArticles.includes(article.slug!) ? '−' : '+'
       } else {
         return ''
@@ -84,12 +84,12 @@ export default Vue.extend({
     isExpanded (article: Article): boolean {
       return this.expandedArticles.indexOf(article.slug!) > -1
     },
-    subArticleTitle (article: Article, subArticle: Article): string {
-      if (subArticle.title.startsWith(article.title)) {
+    childTitle (article: Article, child: Article): string {
+      if (child.title.startsWith(article.title)) {
         const r = new RegExp(`^${article.title}:\\s+`)
-        return subArticle.title.replace(r, '')
+        return child.title.replace(r, '')
       } else {
-        return subArticle.title
+        return child.title
       }
     },
   },
@@ -112,7 +112,7 @@ export default Vue.extend({
     font-size: 120%;
   }
 
-  .sub-article {
+  .child {
     display: block;
     margin-left: 1em;
   }

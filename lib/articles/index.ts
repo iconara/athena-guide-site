@@ -20,19 +20,19 @@ export class Article implements ArticleMeta {
   readonly slug?: string
   readonly series?: SeriesMeta
   readonly body: string
-  readonly subArticles: Article[]
+  readonly children: Article[]
 
-  constructor (title: string, slug: string | undefined, date: string | Date, author: string | undefined, body: string, series: SeriesMeta | undefined, subArticles: Article[] | undefined) {
+  constructor (title: string, slug: string | undefined, date: string | Date, author: string | undefined, body: string, series: SeriesMeta | undefined, children: Article[] | undefined) {
     this.title = title
     this.slug = slug
     this.date = new Date(date)
     this.author = author
     this.body = body.replace(/<h1[^>]+>.+?<\/h1>/, '')
     this.series = series
-    this.subArticles = subArticles || []
+    this.children = children || []
   }
 
-  withSubArticles (articles: Article[]): Article {
+  withChildren (articles: Article[]): Article {
     return new Article(
       this.title,
       this.slug,

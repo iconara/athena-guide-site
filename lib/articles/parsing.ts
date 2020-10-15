@@ -28,7 +28,7 @@ function articleComparator (a: Article, b: Article): number {
   return b.date.valueOf() - a.date.valueOf()
 }
 
-function subArticleComparator (a: Article, b: Article): number {
+function childArticleComparator (a: Article, b: Article): number {
   const c = a.series!.index - b.series!.index
   if (c === 0) {
     return articleComparator(a, b)
@@ -66,15 +66,15 @@ export function parseArticles (rawArticles: Map<string, RawArticle>) {
   }
   for (let i = 0; i < articles.length; i++) {
     if (articlesBySeries.has(articles[i].slug!)) {
-      const subArticles = <Article[]>articlesBySeries.get(articles[i].slug!)!
-      subArticles.sort(subArticleComparator)
-      articles[i] = articles[i].withSubArticles(subArticles)
+      const children = <Article[]>articlesBySeries.get(articles[i].slug!)!
+      children.sort(childArticleComparator)
+      articles[i] = articles[i].withChildren(children)
       articlesBySeries.delete(articles[i].slug!)
     }
   }
-  for (const [slug, subArticles] of articlesBySeries) {
-    subArticles.sort(subArticleComparator)
-    const {title, date, author, body, series} = subArticles[0]!
+  for (const [slug, children] of articlesBySeries) {
+    children.sort(childArticleComparator)
+    const {title, date, author, body, series} = children[0]!
     const parentArticle = new Article(
       title,
       slug,
@@ -82,7 +82,7 @@ export function parseArticles (rawArticles: Map<string, RawArticle>) {
       author,
       body,
       series,
-      subArticles.slice(1),
+      children.slice(1),
     )
     articles.push(parentArticle)
   }

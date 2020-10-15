@@ -134,21 +134,21 @@ describe('parseArticles', () => {
       const helloArticle = articles.find((a) => a.slug === 'hello')!
       const thirdArticle = articles.find((a) => a.slug === 'the-third')!
       expect(articles).toHaveLength(3)
-      expect(helloArticle.subArticles).toHaveLength(2)
+      expect(helloArticle.children).toHaveLength(2)
       expect(helloArticle.title).toBe('Hello')
-      expect(helloArticle.subArticles[1].title).toBe('Hello 2')
-      expect(thirdArticle.subArticles).toHaveLength(1)
+      expect(helloArticle.children[1].title).toBe('Hello 2')
+      expect(thirdArticle.children).toHaveLength(1)
     })
 
     it('stores an empty array for articles without series', () => {
       const articles = <Article[]>get('articles')
       const worldArticle = articles.find((a) => a.slug === 'world')!
-      expect(worldArticle.subArticles).toBeEmpty()
+      expect(worldArticle.children).toBeEmpty()
     })
 
     it('sorts the sub articles by series index', () => {
       const articles = <Article[]>get('articles')
-      const helloTitles = articles.find((a) => a.slug === 'hello')!.subArticles.map((a) => a.title)
+      const helloTitles = articles.find((a) => a.slug === 'hello')!.children.map((a) => a.title)
       expect(helloTitles).toEqual([
         'Hello 1',
         'Hello 2',
@@ -190,8 +190,8 @@ describe('parseArticles', () => {
         const series2Article = articles.find((a) => a.slug === 'series-2')!
         expect(series2Article.slug).toBe('series-2')
         expect(series2Article.title).toBe('Series 2 A')
-        expect(series2Article.subArticles).toHaveLength(1)
-        expect(series2Article.subArticles[0].title).toBe('Series 2 B')
+        expect(series2Article.children).toHaveLength(1)
+        expect(series2Article.children[0].title).toBe('Series 2 B')
       })
     })
 
@@ -225,7 +225,7 @@ describe('parseArticles', () => {
 
       it('sorts those articles as if the index was 0 and then by date', () => {
         const articles = <Article[]>get('articles')
-        const helloTitles = articles.find((a) => a.slug === 'hello')!.subArticles.map((a) => a.title)
+        const helloTitles = articles.find((a) => a.slug === 'hello')!.children.map((a) => a.title)
         expect(helloTitles).toEqual([
           'Hello 3',
           'Hello 2',
