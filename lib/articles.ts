@@ -5,6 +5,7 @@ export interface ArticleMeta {
   readonly isoDate: string
   readonly author?: string
   readonly slug?: string
+  readonly series?: string
 }
 
 export class Article implements ArticleMeta {
@@ -12,14 +13,30 @@ export class Article implements ArticleMeta {
   readonly date: Date
   readonly author?: string
   readonly slug?: string
+  readonly series?: string
   readonly body: string
+  readonly subArticles: Article[]
 
-  constructor (title: string, slug: string | undefined, date: string | Date, author: string | undefined, body: string) {
+  constructor (title: string, slug: string | undefined, date: string | Date, author: string | undefined, body: string, series: string | undefined, subArticles: Article[] | undefined) {
     this.title = title
     this.slug = slug
     this.date = new Date(date)
     this.author = author
     this.body = body.replace(/<h1[^>]+>.+?<\/h1>/, '')
+    this.series = series
+    this.subArticles = subArticles || []
+  }
+
+  withSubArticles (articles: Article[]): Article {
+    return new Article(
+      this.title,
+      this.slug,
+      this.date,
+      this.author,
+      this.body,
+      this.series,
+      articles,
+    )
   }
 
   get preamble (): string {
@@ -47,6 +64,7 @@ export class Article implements ArticleMeta {
       isoDate: this.isoDate,
       author: this.author,
       slug: this.slug,
+      series: this.series,
     }
   }
 }
