@@ -37,7 +37,7 @@ function childArticleComparator (a: Article, b: Article): number {
   }
 }
 
-export function parseArticles (rawArticles: Map<string, RawArticle>) {
+function parseRawArticles (rawArticles: Map<string, RawArticle>): Article[] {
   const allArticles = []
   for (const [key, rawArticle] of rawArticles) {
     const slug = key.replace(/^\.\/(.+)\.md$/, '$1').replace(/\//g, '-')
@@ -51,8 +51,11 @@ export function parseArticles (rawArticles: Map<string, RawArticle>) {
       [],
     ))
   }
+  return allArticles
+}
+
+function groupBySeries (allArticles: Article[]): Map<string, Article[]> {
   const articlesBySeries = new Map<string, Article[]>()
-  const articles = []
   for (const article of allArticles) {
     const seriesSlug = article.series?.slug
     if (seriesSlug && seriesSlug !== article.slug) {
@@ -60,19 +63,25 @@ export function parseArticles (rawArticles: Map<string, RawArticle>) {
         articlesBySeries.set(seriesSlug, [])
       }
       articlesBySeries.get(seriesSlug)!.push(article)
-    } else {
-      articles.push(article)
     }
   }
-  for (let i = 0; i < articles.length; i++) {
-    if (articlesBySeries.has(articles[i].slug!)) {
-      const children = <Article[]>articlesBySeries.get(articles[i].slug!)!
+  return articlesBySeries
+}
+
+function integrateChildren (parentArticles: Article[], childrenBySeries: Map<string, Article[]>): void {
+  for (let i = 0; i < parentArticles.length; i++) {
+    const article = parentArticles[i]
+    if (childrenBySeries.has(article.slug!)) {
+      const children = <Article[]>childrenBySeries.get(article.slug!)!
       children.sort(childArticleComparator)
-      articles[i] = articles[i].withChildren(children)
-      articlesBySeries.delete(articles[i].slug!)
+      parentArticles[i] = article.withChildren(children)
+      childrenBySeries.delete(article.slug!)
     }
   }
-  for (const [slug, children] of articlesBySeries) {
+}
+
+function addVirtualParents (parentArticles: Article[], childrenBySeries: Map<string, Article[]>): void {
+  for (const [slug, children] of childrenBySeries) {
     children.sort(childArticleComparator)
     const {title, date, author, body, series} = children[0]!
     const parentArticle = new Article(
@@ -84,8 +93,16 @@ export function parseArticles (rawArticles: Map<string, RawArticle>) {
       series,
       children.slice(1),
     )
-    articles.push(parentArticle)
+    parentArticles.push(parentArticle)
   }
-  articles.sort(articleComparator)
-  return articles
+}
+
+export function parseArticles (rawArticles: Map<string, RawArticle>) {
+  const allArticles = parseRawArticles(rawArticles)
+  const childrenBySeries = groupBySeries(allArticles)
+  const parentArticles = allArticles.filter((a) => !a.series)
+  integrateChildren(parentArticles, childrenBySeries)
+  addVirtualParents(parentArticles, childrenBySeries)
+  parentArticles.sort(articleComparator)
+  return parentArticles
 }
