@@ -76,15 +76,34 @@ describe('parseArticles', () => {
     ])
   })
 
-  describe('when the key has directories', () => {
+  describe('when the local path has directories', () => {
     def('rawArticles', () => {
       const rawArticles = <Map<string, RawArticle>>get('rawArticles')
       rawArticles.set('./very/very/deep.md', {
-        html: '<p>Deep</p>',
+        html: '<p>Deep 1</p>',
         attributes: {
-          title: 'Deep',
+          title: 'Deep 1',
           date: '2020-10-11',
           author: 'Mr Foo',
+        }
+      })
+      rawArticles.set('./very/very/deep2.md', {
+        html: '<p>Deep 2</p>',
+        attributes: {
+          title: 'Deep 2',
+          date: '2020-10-11',
+          author: 'Mr Foo',
+        }
+      })
+      rawArticles.set('./very/very/deep3.md', {
+        html: '<p>Deep 3</p>',
+        attributes: {
+          title: 'Deep 3',
+          date: '2020-10-11',
+          author: 'Mr Foo',
+          series: {
+            slug: 'something-else',
+          },
         }
       })
       return rawArticles
@@ -92,12 +111,26 @@ describe('parseArticles', () => {
 
     it('uses the full path but replaces slashes with dashes', () => {
       const articles = <Article[]>get('articles')
-      const article = articles.find((a) => a.title === 'Deep')!
+      const article = articles.find((a) => a.title === 'Deep 1')!
       expect(article.slug).toBe('very-very-deep')
+    })
+
+    it('uses the first directory as the series slug', () => {
+      const articles = <Article[]>get('articles')
+      const article = articles.find((a) => a.title === 'Deep 1')!
+      expect(article.children[0].title).toBe('Deep 2')
+    })
+
+    describe('when there is a series slug in the metadata', () => {
+      it('still uses the first directory as the series slug', () => {
+        const articles = <Article[]>get('articles')
+        const article = articles.find((a) => a.title === 'Deep 1')!
+        expect(article.children[1].title).toBe('Deep 3')
+      })
     })
   })
 
-  describe('when there is an article series', () => {
+  describe('when articles have series metadata', () => {
     def('rawArticles', () => {
       const rawArticles = <Map<string, RawArticle>>get('rawArticles')
       rawArticles.set('./hello-2.md', {
@@ -254,6 +287,41 @@ describe('parseArticles', () => {
           'Hello 2',
         ])
       })
+    })
+  })
+
+  describe('when there is series metadata with only an index', () => {
+    def('rawArticles', () => {
+      const rawArticles = <Map<string, RawArticle>>get('rawArticles')
+      rawArticles.set('./something.md', {
+        html: '<p>Something</p>',
+        attributes: {
+          title: 'Something',
+          date: '2020-10-11',
+          author: 'Mr Foo',
+          series: {
+            index: 3,
+          },
+        }
+      })
+      rawArticles.set('./something-else.md', {
+        html: '<p>Something Else</p>',
+        attributes: {
+          title: 'Something Else',
+          date: '2020-10-11',
+          author: 'Mr Foo',
+          series: {
+            index: 4,
+          },
+        }
+      })
+      return rawArticles
+    })
+
+    it('ignores the series metadata', () => {
+      const articles = <Article[]>get('articles')
+      const article = articles.find((a) => a.title === 'Something')!
+      expect(article.children).toBeEmpty()
     })
   })
 

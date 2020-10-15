@@ -1,6 +1,9 @@
 import {Article, SeriesMeta} from '.'
 
-type RawSeriesMeta = SeriesMeta
+type RawSeriesMeta = {
+  slug?: string
+  index?: number
+}
 
 type RawAttributes = {
   title?: string
@@ -14,10 +17,20 @@ export type RawArticle = {
   html: string
 }
 
-function createSeriesMeta (meta: {slug: string, index?: number}): SeriesMeta {
-  return {
-    slug: meta.slug,
-    index: meta.index,
+function createSeriesMeta (localPath: string, meta: {slug?: string, index?: number} | undefined): SeriesMeta | undefined {
+  const parts = localPath.replace(/^\.\//, '').split('/')
+  if (parts.length > 1) {
+    return {
+      slug: parts[0],
+      index: meta?.index,
+    }
+  } else if (meta && meta.slug) {
+    return {
+      slug: meta.slug,
+      index: meta.index,
+    }
+  } else {
+    return undefined
   }
 }
 
@@ -55,7 +68,7 @@ function parseRawArticles (rawArticles: Map<string, RawArticle>): Article[] {
       rawArticle.attributes.date && rawArticle.attributes.date || null,
       rawArticle.attributes.author,
       rawArticle.html,
-      rawArticle.attributes.series && createSeriesMeta(rawArticle.attributes.series),
+      createSeriesMeta(localPath, rawArticle.attributes.series),
       [],
     ))
   }
