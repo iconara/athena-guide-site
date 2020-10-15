@@ -48,11 +48,10 @@ function childArticleComparator (a: Article, b: Article): number {
 
 function parseRawArticles (rawArticles: Map<string, RawArticle>): Article[] {
   const allArticles = []
-  for (const [key, rawArticle] of rawArticles) {
-    const slug = key.replace(/^\.\/(.+)\.md$/, '$1').replace(/\//g, '-')
+  for (const [localPath, rawArticle] of rawArticles) {
     allArticles.push(new Article(
       rawArticle.attributes.title || '',
-      slug,
+      localPath,
       rawArticle.attributes.date && rawArticle.attributes.date || null,
       rawArticle.attributes.author,
       rawArticle.html,
@@ -90,18 +89,9 @@ function integrateChildren (parentArticles: Article[], childrenBySeries: Map<str
 }
 
 function addVirtualParents (parentArticles: Article[], childrenBySeries: Map<string, Article[]>): void {
-  for (const [slug, children] of childrenBySeries) {
+  for (const [, children] of childrenBySeries) {
     children.sort(childArticleComparator)
-    const {title, date, author, body, series} = children[0]!
-    const parentArticle = new Article(
-      title,
-      slug,
-      date,
-      author,
-      body,
-      series,
-      children.slice(1),
-    )
+    const parentArticle = children[0].withChildren(children.slice(1))
     parentArticles.push(parentArticle)
   }
 }

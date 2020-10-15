@@ -25,11 +25,14 @@ export const actions: ActionTree<State, State> = {
     return parseArticles(rawArticles)
   },
   async loadArticle (_ctx, slug: string): Promise<Article> {
-    const rawArticle = await import(`~/content/articles/${slug}.md`)
+    const context = await require.context('~/content/articles', true, /\.md$/)
+    const keys = await context.keys()
+    const key = keys.find((k) => Article.toSlug(k) === slug)
+    const rawArticle = await import(`~/content/articles/${key.replace(/^\.\//, '')}`)
     const {title, date, author, series} = rawArticle.attributes
     return new Article(
       title,
-      undefined,
+      key,
       new Date(date),
       author,
       rawArticle.html,

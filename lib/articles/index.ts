@@ -18,13 +18,15 @@ export class Article implements ArticleMeta {
   readonly date: Date | null
   readonly author?: string
   readonly slug: string
+  readonly localPath: string
   readonly series?: SeriesMeta
   readonly body: string
   readonly children: Article[]
 
-  constructor (title: string, slug: string, date: string | Date | null, author: string | undefined, body: string, series: SeriesMeta | undefined, children: Article[] | undefined) {
+  constructor (title: string, localPath: string, date: string | Date | null, author: string | undefined, body: string, series: SeriesMeta | undefined, children: Article[] | undefined) {
     this.title = title
-    this.slug = slug
+    this.localPath = localPath
+    this.slug = Article.toSlug(localPath)
     this.date = date ? new Date(date) : null
     this.author = author
     this.body = body.replace(/<h1[^>]+>.+?<\/h1>/, '')
@@ -32,10 +34,14 @@ export class Article implements ArticleMeta {
     this.children = children || []
   }
 
+  static toSlug (path: string): string {
+    return path.replace(/^\.\/(.+)\.md$/, '$1').replace(/\//g, '-')
+  }
+
   withChildren (articles: Article[]): Article {
     return new Article(
       this.title,
-      this.slug,
+      this.localPath,
       this.date,
       this.author,
       this.body,

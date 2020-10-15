@@ -56,6 +56,16 @@ describe('parseArticles', () => {
     ])
   })
 
+  it('keeps the local path', () => {
+    const articles = <Article[]>get('articles')
+    const slugs = articles.map((a) => a.localPath)
+    expect(slugs).toEqual([
+      './world.md',
+      './hello.md',
+      './the-third.md',
+    ])
+  })
+
   it('returns the articles in reverse chronological order', () => {
     const articles = <Article[]>get('articles')
     const titles = articles.map((a) => a.title)
@@ -187,8 +197,8 @@ describe('parseArticles', () => {
 
       it('uses the first article of the series as parent', () => {
         const articles = <Article[]>get('articles')
-        const series2Article = articles.find((a) => a.slug === 'series-2')!
-        expect(series2Article.slug).toBe('series-2')
+        const series2Article = articles.find((a) => a.slug === 'series-2-a')!
+        expect(series2Article.slug).toBe('series-2-a')
         expect(series2Article.title).toBe('Series 2 A')
         expect(series2Article.children).toHaveLength(1)
         expect(series2Article.children[0].title).toBe('Series 2 B')

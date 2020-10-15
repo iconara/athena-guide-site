@@ -30,7 +30,8 @@ export default Vue.extend({
   async fetch () {
     this.loading = true
     try {
-      const article = <Article>(await this.$store.dispatch('loadArticle', this.$route.params.slug))
+      const slug = this.$route.params.slug
+      const article = <Article>(await this.$store.dispatch('loadArticle', slug))
       this.title = article.title
       this.author = article.author
       this.displayDate = article.isoDate
