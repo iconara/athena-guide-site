@@ -1,30 +1,23 @@
 <template>
   <div class="default-layout">
-    <header>
-      <logo
-        v-if="includeLogo"
-        class="corner-logo"
-        :tagline="false"
-        :multiline="true"
-        :backlink="true"
-      />
-    </header>
-    <section class="main-header">
-      <slot name="main-header"/>
-    </section>
-    <section class="main-content">
-      <slot name="main-content"/>
-    </section>
-    <section class="sidebar-header">
-      <slot name="sidebar-header">
-        <h2>All articles</h2>
-      </slot>
-    </section>
-    <section class="sidebar-content">
-      <slot name="sidebar-content">
-        <article-list/>
-      </slot>
-    </section>
+    <logo
+      v-if="includeLogo"
+      class="corner-logo"
+      :tagline="false"
+      :multiline="true"
+      :backlink="true"
+    />
+    <h1 v-if="title">{{title}}</h1>
+    <article class="main-content">
+      <slot/>
+    </article>
+    <nav
+      v-if="includesArticleList"
+      class="article-list"
+    >
+      <h2>All articles</h2>
+      <article-list/>
+    </nav>
     <footer v-if="includeCopyright">
       &copy; {{copyrightYear}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
       – <nuxt-link :to="{path: '/legal/'}">Legal</nuxt-link>
@@ -43,6 +36,10 @@ export default Vue.extend({
     ArticleList,
   },
   props: {
+    title: {
+      type: String,
+      default: null,
+    },
     includeLogo: {
       type: Boolean,
       default: true,
@@ -50,6 +47,10 @@ export default Vue.extend({
     includeCopyright: {
       type: Boolean,
       default: true,
+    },
+    includesArticleList: {
+      type: Boolean,
+      default: false,
     },
     copyrightYear: {
       type: Number,
@@ -62,52 +63,46 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .default-layout {
   display: grid;
-  grid-template: auto 1fr auto / minmax(50ch, 90ch) minmax(25ch, 40ch);
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr minmax(55ch, 75ch) 40ch 1fr;
   row-gap: 1rem;
-  column-gap: 12vw;
+  column-gap: 10ch;
   margin: 5rem 5rem 8rem 5rem;
 
-  header {
-    grid-column: 1 / 3;
+  .corner-logo {
+    grid-column: 3;
     grid-row: 1;
     margin-bottom: 6rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
+    font-size: 6px;
+  }
 
-    .corner-logo {
-      font-size: 6px;
-    }
+  h1 {
+    grid-column: 2 / 4;
+    grid-row: 2;
   }
 
   footer {
-    grid-column: 1 / 3;
+    grid-column: 2 / 4;
     grid-row: 4;
     margin-top: 2rem;
   }
 
-  .main-header,
-  .sidebar-header {
-    grid-row: 2;
-    align-self: flex-end;
-  }
-
-  .main-header {
-    grid-column: 1;
-  }
-
   .main-content {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 3;
   }
 
-  .sidebar-header {
-    grid-column: 2;
-  }
-
-  .sidebar-content {
-    grid-column: 2;
+  .article-list {
+    grid-column: 3;
     grid-row: 3;
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.6em;
+    }
   }
 }
 
@@ -116,20 +111,20 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
 
-    .main-header,
-    .sidebar-header {
+    .corner-logo {
+      align-items: flex-end;
+    }
+
+    .main-header {
       align-self: inherit;
     }
 
-    .sidebar-header {
+    .article-list {
       border-top: 1px solid #ccc;
-      margin-top: 2rem;
-      padding-top: 3rem;
-    }
-
-    .sidebar-content {
       border-bottom: 1px solid #ccc;
+      margin-top: 2rem;
       margin-bottom: 2rem;
+      padding-top: 3rem;
       padding-bottom: 3rem;
     }
   }
@@ -139,10 +134,8 @@ export default Vue.extend({
   .default-layout {
     margin: 3rem 2rem 8rem 1.5rem;
 
-    header {
-      .corner-logo {
-        font-size: 4px;
-      }
+    .corner-logo {
+      font-size: 4px;
     }
   }
 }

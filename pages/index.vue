@@ -1,27 +1,12 @@
 <template>
-  <default-layout
-    :include-logo="false"
-    :include-copyright="false"
-  >
-    <template v-slot:main-header>
-      <logo/>
-    </template>
-    <template v-slot:main-content>
-      <div>
-        <p>
-          Athena is a serverless query service for data on S3, but there is a lot behind that description. Here you will find articles that explain the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.
-        </p>
-      </div>
-    </template>
-    <template v-slot:sidebar-header>
-      <h2>Latest articles</h2>
-    </template>
-    <template v-slot:sidebar-content>
-      <div>
-        <article-list/>
-      </div>
-    </template>
-  </default-layout>
+  <div class="front-layout">
+    <logo/>
+    <p>
+      Athena is a serverless query service for data on S3, but there is a lot behind that description. Here you will find articles that explain the not so obvious aspects of how to use the service to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.
+    </p>
+    <h2>Contents</h2>
+    <article-list/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -46,14 +31,57 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.more-articles {
-  display: block;
-  margin-top: 0.5rem;
+.front-layout {
+  display: grid;
+  grid-template-columns: 0.85fr 75ch 1.15fr;
+  margin: 10rem 5rem 8rem 5rem;
+
+  & > * {
+    grid-column: 2;
+  }
 }
 
-@media all and (max-width: 799px) {
+.logo {
+  font-size: 110%;
+}
+
+.articles {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  line-height: 200%;
+
+  /deep/ .article-link,
+  /deep/ .about-link {
+    margin: 0;
+    margin-right: 0.5em;
+    border: none;
+  }
+
+  /deep/ .article-link::after {
+    content: "/";
+    margin-left: 0.5em;
+  }
+}
+
+@media all and (max-width: 959px) {
+  .front-layout {
+    margin: 10rem 2rem 8rem 1.5rem;
+  }
+
   .logo {
-    font-size: 2vw;
+    font-size: 90%;
+  }
+}
+
+@media all and (max-width: 659px) {
+  .front-layout {
+    margin-top: 4rem;
+    grid-template-columns: 1fr 55ch 1fr;
+  }
+
+  .logo {
+    font-size: 70%;
   }
 }
 </style>

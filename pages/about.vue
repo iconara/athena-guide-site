@@ -1,16 +1,13 @@
 <template>
-  <default-layout>
-    <template v-slot:main-header>
-      <h1>About the Athena Guide</h1>
-    </template>
-    <template v-slot:main-content>
-      <div v-if="about" v-html="about.body"/> <!-- eslint-disable-line vue/no-v-html -->
-    </template>
-    <template v-slot:sidebar-content>
-      <div>
-        <article-list :show-about-link="false"/>
-      </div>
-    </template>
+  <default-layout
+    title="About the Athena Guide"
+    :includes-article-list="true"
+  >
+    <div
+      v-if="about"
+      class="body"
+      v-html="about.body"
+    /> <!-- eslint-disable-line vue/no-v-html -->
   </default-layout>
 </template>
 
