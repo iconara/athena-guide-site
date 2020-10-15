@@ -30,11 +30,11 @@ export default Vue.extend({
   async fetch () {
     this.loading = true
     try {
-      const article: Article = await this.$store.dispatch('loadArticle', this.$route.params.slug)
+      const article = <Article>(await this.$store.dispatch('loadArticle', this.$route.params.slug))
       this.title = article.title
       this.author = article.author
       this.displayDate = article.isoDate
-      this.copyrightYear = article.copyrightYear
+      this.copyrightYear = article.copyrightYear || (new Date()).getUTCFullYear()
       this.body = article.body
       this.preamble = article.preamble
     } finally {
@@ -46,7 +46,7 @@ export default Vue.extend({
       copyrightYear: null as unknown as number,
       title: '',
       author: undefined as unknown as string | undefined,
-      displayDate: '',
+      displayDate: '' as string | null,
       body: '',
       preamble: '',
       loading: false,

@@ -6,9 +6,9 @@ type RawSeriesMeta = {
 }
 
 type RawAttributes = {
-  title: string
-  date: string
-  author: string
+  title?: string
+  date?: string
+  author?: string
   series?: RawSeriesMeta
 }
 
@@ -25,7 +25,9 @@ function createSeriesMeta (meta: {slug: string, index?: number}): SeriesMeta {
 }
 
 function articleComparator (a: Article, b: Article): number {
-  return b.date.valueOf() - a.date.valueOf()
+  const aDate = a.date || new Date(0)
+  const bDate = b.date || new Date(0)
+  return bDate.valueOf() - aDate.valueOf()
 }
 
 function childArticleComparator (a: Article, b: Article): number {
@@ -42,9 +44,9 @@ function parseRawArticles (rawArticles: Map<string, RawArticle>): Article[] {
   for (const [key, rawArticle] of rawArticles) {
     const slug = key.replace(/^\.\/(.+)\.md$/, '$1').replace(/\//g, '-')
     allArticles.push(new Article(
-      rawArticle.attributes.title,
+      rawArticle.attributes.title || '',
       slug,
-      new Date(rawArticle.attributes.date),
+      rawArticle.attributes.date && rawArticle.attributes.date || null,
       rawArticle.attributes.author,
       rawArticle.html,
       rawArticle.attributes.series && createSeriesMeta(rawArticle.attributes.series),

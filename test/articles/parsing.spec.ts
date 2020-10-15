@@ -42,7 +42,7 @@ describe('parseArticles', () => {
     expect(articles).toHaveLength(3)
     expect(articles[1].body).toBe('<p>Hello</p>')
     expect(articles[1].title).toBe('Hello')
-    expect(articles[1].date.toISOString()).toStartWith('2020-10-11')
+    expect(articles[1].date!.toISOString()).toStartWith('2020-10-11')
     expect(articles[1].author).toBe('Mr Foo')
   })
 
@@ -232,6 +232,36 @@ describe('parseArticles', () => {
           'Hello 1',
         ])
       })
+    })
+  })
+
+  describe('when there is no date in the raw attributes', () => {
+    def('rawArticles', () => {
+      const rawArticles = <Map<string, RawArticle>>get('rawArticles')
+      rawArticles.set('./hello.md', {
+        html: '<p>Hello</p>',
+        attributes: {
+          title: 'Hello',
+          author: 'Mr Foo',
+        },
+      })
+      return rawArticles
+    })
+
+    it('stores a null date', () => {
+      const articles = <Article[]>get('articles')
+      const helloArticle = articles.find((a) => a.slug === 'hello')!
+      expect(helloArticle.date).toBeNull()
+    })
+
+    it('sorts the article as if it was infinitely old', () => {
+      const articles = <Article[]>get('articles')
+      const titles = articles.map((a) => a.title)
+      expect(titles).toEqual([
+        'World',
+        '3rd',
+        'Hello',
+      ])
     })
   })
 })
