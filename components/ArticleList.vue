@@ -11,13 +11,13 @@
           :title="article.preamble"
           v-text="article.title"/>
         <span
-          v-if="includeChildren"
+          v-if="!inline"
           v-text="articleControlText(article)"
           @click="toggleExpansion(article)"
           class="series-toggle"
         />
       </span>
-      <div v-if="includeChildren && isExpanded(article)">
+      <div v-if="!inline && isExpanded(article)">
         <nuxt-link
           v-for="child in article.children"
           :key="child.path"
@@ -28,10 +28,7 @@
         />
       </div>
     </div>
-    <span
-      v-if="showAboutLink"
-      class="about-link"
-    >
+    <span class="about-link">
       <nuxt-link
         :to="{path: '/about/'}">
         About the Athena Guide
@@ -46,13 +43,9 @@ import {Article} from '@/lib/articles'
 
 export default Vue.extend({
   props: {
-    showAboutLink: {
+    inline: {
       type: Boolean,
-      default: true,
-    },
-    includeChildren: {
-      type: Boolean,
-      default: true,
+      default: false,
     },
   },
   async fetch () {
