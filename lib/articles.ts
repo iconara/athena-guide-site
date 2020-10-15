@@ -5,7 +5,12 @@ export interface ArticleMeta {
   readonly isoDate: string
   readonly author?: string
   readonly slug?: string
-  readonly series?: string
+  readonly series?: SeriesMeta
+}
+
+type SeriesMeta = {
+  slug: string
+  index: number
 }
 
 export class Article implements ArticleMeta {
@@ -13,11 +18,11 @@ export class Article implements ArticleMeta {
   readonly date: Date
   readonly author?: string
   readonly slug?: string
-  readonly series?: string
+  readonly series?: SeriesMeta
   readonly body: string
   readonly subArticles: Article[]
 
-  constructor (title: string, slug: string | undefined, date: string | Date, author: string | undefined, body: string, series: string | undefined, subArticles: Article[] | undefined) {
+  constructor (title: string, slug: string | undefined, date: string | Date, author: string | undefined, body: string, series: SeriesMeta | undefined, subArticles: Article[] | undefined) {
     this.title = title
     this.slug = slug
     this.date = new Date(date)

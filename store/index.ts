@@ -27,16 +27,18 @@ export const actions: ActionTree<State, State> = {
         rawArticle.attributes.author,
         rawArticle.html,
         rawArticle.attributes.series,
+        [],
       )
     })
     const articlesBySeries = new Map<string, Article[]>()
     const articles = []
     for (const article of allArticles) {
-      if (article.series && article.series !== article.slug) {
-        if (!articlesBySeries.has(article.series)) {
-          articlesBySeries.set(article.series, [])
+      const seriesSlug = article.series?.slug
+      if (seriesSlug && seriesSlug !== article.slug) {
+        if (!articlesBySeries.has(seriesSlug)) {
+          articlesBySeries.set(seriesSlug, [])
         }
-        articlesBySeries.get(article.series).push(article)
+        articlesBySeries.get(seriesSlug)!.push(article)
       } else {
         articles.push(article)
       }
@@ -44,13 +46,14 @@ export const actions: ActionTree<State, State> = {
     return articles
       .sort((a: Article, b: Article) => b.date.valueOf() - a.date.valueOf())
       .map((a) => {
-        if (articlesBySeries.has(a.slug)) {
-          return a.withSubArticles(articlesBySeries.get(a.slug))
+        if (articlesBySeries.has(a.slug!)) {
+          const subArticles = articlesBySeries.get(a.slug!)!
+          subArticles.sort((a: Article, b: Article) => a.series!.index - b.series!.index)
+          return a.withSubArticles(subArticles)
         } else {
           return a
         }
       })
-      .map((a) => a.meta)
   },
   async loadArticle (_ctx, slug: string): Promise<Article> {
     const rawArticle = await import(`~/content/articles/${slug}.md`)
@@ -62,6 +65,7 @@ export const actions: ActionTree<State, State> = {
       author,
       rawArticle.html,
       series,
+      [],
     )
   },
   async loadAbout (): Promise<Article> {
@@ -73,6 +77,8 @@ export const actions: ActionTree<State, State> = {
       new Date(date),
       author,
       rawArticle.html,
+      undefined,
+      [],
     )
   },
 }
