@@ -1,9 +1,6 @@
 import {Article, SeriesMeta} from '.'
 
-type RawSeriesMeta = {
-  slug: string
-  index?: number
-}
+type RawSeriesMeta = SeriesMeta
 
 type RawAttributes = {
   title?: string
@@ -20,22 +17,32 @@ export type RawArticle = {
 function createSeriesMeta (meta: {slug: string, index?: number}): SeriesMeta {
   return {
     slug: meta.slug,
-    index: meta.index || 0,
+    index: meta.index,
   }
 }
 
 function articleComparator (a: Article, b: Article): number {
   const aDate = a.date || new Date(0)
   const bDate = b.date || new Date(0)
-  return bDate.valueOf() - aDate.valueOf()
+  const c = bDate.valueOf() - aDate.valueOf()
+  if (c === 0) {
+    return a.title.localeCompare(b.title)
+  } else {
+    return c
+  }
 }
 
 function childArticleComparator (a: Article, b: Article): number {
-  const c = a.series!.index - b.series!.index
-  if (c === 0) {
+  const aIndex = a.series!.index
+  const bIndex = b.series!.index
+  if (aIndex === bIndex) {
     return articleComparator(a, b)
+  } else if (aIndex === undefined) {
+    return 1
+  } else if (bIndex === undefined) {
+    return -1
   } else {
-    return c
+    return aIndex - bIndex
   }
 }
 

@@ -10,7 +10,7 @@ export interface ArticleMeta {
 
 export type SeriesMeta = {
   slug: string
-  index: number
+  index?: number
 }
 
 export class Article implements ArticleMeta {

@@ -209,6 +209,17 @@ describe('parseArticles', () => {
             },
           }
         })
+        rawArticles.set('./hello-4.md', {
+          html: '<p>Hello 4</p>',
+          attributes: {
+            title: 'Hello 4',
+            date: '2020-10-20',
+            author: 'Mr Foo',
+            series: {
+              slug: 'hello',
+            },
+          }
+        })
         rawArticles.set('./hello-3.md', {
           html: '<p>Hello 3</p>',
           attributes: {
@@ -223,13 +234,14 @@ describe('parseArticles', () => {
         return rawArticles
       })
 
-      it('sorts those articles as if the index was 0 and then by date', () => {
+      it('sorts those articles as if the index was infinite, then by date, then by title', () => {
         const articles = <Article[]>get('articles')
         const helloTitles = articles.find((a) => a.slug === 'hello')!.children.map((a) => a.title)
         expect(helloTitles).toEqual([
-          'Hello 3',
-          'Hello 2',
           'Hello 1',
+          'Hello 3',
+          'Hello 4',
+          'Hello 2',
         ])
       })
     })
