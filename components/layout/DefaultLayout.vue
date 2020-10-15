@@ -1,19 +1,15 @@
 <template>
   <div class="default-layout">
-    <nav class="top">
-      <logo
-        v-if="includeLogo"
-        class="corner-logo"
-        :tagline="false"
-        :multiline="true"
-        :backlink="true"
-      />
-    </nav>
-    <header class="main-header">
-      <slot name="main-header"/>
-    </header>
+    <logo
+      v-if="includeLogo"
+      class="corner-logo"
+      :tagline="false"
+      :multiline="true"
+      :backlink="true"
+    />
+    <h1 v-if="title">{{title}}</h1>
     <article class="main-content">
-      <slot name="main-content"/>
+      <slot/>
     </article>
     <nav
       v-if="includesArticleList"
@@ -40,6 +36,10 @@ export default Vue.extend({
     ArticleList,
   },
   props: {
+    title: {
+      type: String,
+      default: null,
+    },
     includeLogo: {
       type: Boolean,
       default: true,
@@ -63,43 +63,40 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .default-layout {
   display: grid;
-  grid-template: auto 1fr auto / minmax(50ch, 90ch) minmax(25ch, 40ch);
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr minmax(55ch, 75ch) 40ch 1fr;
   row-gap: 1rem;
   column-gap: 10ch;
   margin: 5rem 5rem 8rem 5rem;
 
-  nav.top {
-    grid-column: 2;
+  .corner-logo {
+    grid-column: 3;
     grid-row: 1;
     margin-bottom: 6rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    font-size: 6px;
+  }
 
-    .corner-logo {
-      font-size: 6px;
-    }
+  h1 {
+    grid-column: 2 / 4;
+    grid-row: 2;
   }
 
   footer {
-    grid-column: 1 / 3;
+    grid-column: 2 / 4;
     grid-row: 4;
     margin-top: 2rem;
   }
 
-  .main-header {
-    grid-column: 1 / 3;
-    grid-row: 2;
-    align-self: flex-end;
-  }
-
   .main-content {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 3;
   }
 
   .article-list {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 3;
 
     h2 {
@@ -114,7 +111,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
 
-    nav.top {
+    .corner-logo {
       align-items: flex-end;
     }
 
@@ -137,10 +134,8 @@ export default Vue.extend({
   .default-layout {
     margin: 3rem 2rem 8rem 1.5rem;
 
-    nav.top {
-      .corner-logo {
-        font-size: 4px;
-      }
+    .corner-logo {
+      font-size: 4px;
     }
   }
 }

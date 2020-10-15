@@ -1,26 +1,20 @@
 <template>
   <default-layout
+    :title="title"
     :copyright-year="copyrightYear"
     :includes-article-list="true"
   >
-    <template v-slot:main-header>
-      <h1>
-        {{title}}
-      </h1>
-    </template>
-    <template v-slot:main-content>
-      <div class="meta">
-        <div class="date" v-text="displayDate"/>
-        <div v-if="author" class="author">
-          by <span class="name">{{author}}</span>
-        </div>
+    <div class="meta">
+      <div class="date" v-text="displayDate"/>
+      <div v-if="author" class="author">
+        by <span class="name">{{author}}</span>
       </div>
-      <div
-        v-if="body"
-        class="body"
-        v-html="body"
-      /> <!-- eslint-disable-line vue/no-v-html -->
-    </template>
+    </div>
+    <div
+      v-if="body"
+      class="body"
+      v-html="body"
+    /> <!-- eslint-disable-line vue/no-v-html -->
   </default-layout>
 </template>
 
