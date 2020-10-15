@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex, {MutationTree, ActionTree, GetterTree} from 'vuex'
 import {Article, ArticleMeta} from '@/lib/articles'
+import {parseArticles, RawArticle} from '@/lib/articles/parsing'
 
 Vue.use(Vuex)
 
@@ -17,43 +18,11 @@ export const actions: ActionTree<State, State> = {
   async loadArticles (): Promise<ArticleMeta[]> {
     const context = await require.context('~/content/articles', true, /\.md$/)
     const keys = await context.keys()
-    const allArticles = keys.map((key: string) => {
-      const rawArticle = context(key)
-      const slug = key.replace(/^\.\/(.+)\.md$/, '$1')
-      return new Article(
-        rawArticle.attributes.title,
-        slug,
-        new Date(rawArticle.attributes.date),
-        rawArticle.attributes.author,
-        rawArticle.html,
-        rawArticle.attributes.series,
-        [],
-      )
-    })
-    const articlesBySeries = new Map<string, Article[]>()
-    const articles = []
-    for (const article of allArticles) {
-      const seriesSlug = article.series?.slug
-      if (seriesSlug && seriesSlug !== article.slug) {
-        if (!articlesBySeries.has(seriesSlug)) {
-          articlesBySeries.set(seriesSlug, [])
-        }
-        articlesBySeries.get(seriesSlug)!.push(article)
-      } else {
-        articles.push(article)
-      }
+    const rawArticles = new Map<string, RawArticle>()
+    for (const k of keys) {
+      rawArticles.set(k, context(k))
     }
-    return articles
-      .sort((a: Article, b: Article) => b.date.valueOf() - a.date.valueOf())
-      .map((a) => {
-        if (articlesBySeries.has(a.slug!)) {
-          const subArticles = articlesBySeries.get(a.slug!)!
-          subArticles.sort((a: Article, b: Article) => a.series!.index - b.series!.index)
-          return a.withSubArticles(subArticles)
-        } else {
-          return a
-        }
-      })
+    return parseArticles(rawArticles)
   },
   async loadArticle (_ctx, slug: string): Promise<Article> {
     const rawArticle = await import(`~/content/articles/${slug}.md`)
