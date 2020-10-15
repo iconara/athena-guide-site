@@ -71,11 +71,11 @@ function groupBySeries (allArticles: Article[]): Map<string, Article[]> {
 function integrateChildren (parentArticles: Article[], childrenBySeries: Map<string, Article[]>): void {
   for (let i = 0; i < parentArticles.length; i++) {
     const article = parentArticles[i]
-    if (childrenBySeries.has(article.slug!)) {
-      const children = <Article[]>childrenBySeries.get(article.slug!)!
+    if (childrenBySeries.has(article.slug)) {
+      const children = <Article[]>childrenBySeries.get(article.slug)!
       children.sort(childArticleComparator)
       parentArticles[i] = article.withChildren(children)
-      childrenBySeries.delete(article.slug!)
+      childrenBySeries.delete(article.slug)
     }
   }
 }
