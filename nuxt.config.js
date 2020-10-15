@@ -11,6 +11,9 @@ export default {
   mode: 'universal',
   target: 'static',
   head: {
+    htmlAttrs: {
+      lang: 'en',
+    },
     titleTemplate: '%s | The Athena Guide',
     meta: [
       {charset: 'utf-8'},
@@ -34,7 +37,6 @@ export default {
     '@nuxt/typescript-build',
   ],
   modules: [
-    'bootstrap-vue/nuxt',
     '@nuxtjs/style-resources',
   ],
   plugins: [
@@ -59,10 +61,10 @@ export default {
       })
     },
   },
-  generate: {
-    routes: glob.sync('articles/**/*.md', {cwd: 'content'}).map((p) => p.replace(/\.md$/, '')),
-  },
   bootstrapVue: {
     icons: true,
+  },
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
   },
 }

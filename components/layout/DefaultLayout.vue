@@ -27,7 +27,7 @@
     </section>
     <footer v-if="includeCopyright">
       &copy; {{copyrightYear}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
-      – <nuxt-link :to="{name: 'legal'}">Legal</nuxt-link>
+      – <nuxt-link :to="{path: '/legal/'}">Legal</nuxt-link>
     </footer>
   </div>
 </template>

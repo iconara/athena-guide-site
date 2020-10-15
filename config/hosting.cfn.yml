@@ -38,6 +38,9 @@ Resources:
       IAMServiceRole: !GetAtt AmplifyRole.Arn
       Repository: !Ref GitHubRepositoryUrl
       OauthToken: !Ref GitHubToken
+      EnvironmentVariables:
+        - Name: BASE_URL
+          Value: https://athena.guide
       BuildSpec: |-
         version: 0.1
         frontend:

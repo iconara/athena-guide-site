@@ -1,9 +1,7 @@
-import moment, {Moment} from 'moment'
-
 export interface ArticleMeta {
   readonly title: string
   readonly preamble: string
-  readonly date: Moment
+  readonly date: Date
   readonly isoDate: string
   readonly author?: string
   readonly slug?: string
@@ -11,15 +9,15 @@ export interface ArticleMeta {
 
 export class Article implements ArticleMeta {
   readonly title: string
-  readonly date: Moment
+  readonly date: Date
   readonly author?: string
   readonly slug?: string
   readonly body: string
 
-  constructor (title: string, slug: string | undefined, date: string | Date | Moment, author: string | undefined, body: string) {
+  constructor (title: string, slug: string | undefined, date: string | Date, author: string | undefined, body: string) {
     this.title = title
     this.slug = slug
-    this.date = moment(date)
+    this.date = new Date(date)
     this.author = author
     this.body = body.replace(/<h1[^>]+>.+?<\/h1>/, '')
   }
@@ -34,11 +32,11 @@ export class Article implements ArticleMeta {
   }
 
   get isoDate (): string {
-    return this.date.format('YYYY-MM-DD')
+    return this.date.toISOString().substring(0, 10)
   }
 
   get copyrightYear (): number {
-    return parseInt(this.date.format('YYYY'))
+    return parseInt(this.date.toISOString().substring(0, 4))
   }
 
   get meta (): ArticleMeta {
