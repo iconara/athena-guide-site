@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex, {MutationTree, ActionTree, GetterTree} from 'vuex'
 import {Article, ArticleMeta} from '@/lib/articles'
+import {parseArticles, RawArticle} from '@/lib/articles/parsing'
 
 Vue.use(Vuex)
 
@@ -16,30 +17,27 @@ export const mutations: MutationTree<State> = {
 export const actions: ActionTree<State, State> = {
   async loadArticles (): Promise<ArticleMeta[]> {
     const context = await require.context('~/content/articles', true, /\.md$/)
-    return (await context.keys())
-      .map((key: string) => {
-        const rawArticle = context(key)
-        const slug = key.replace(/^\.\/(.+)\.md$/, '$1')
-        return new Article(
-          rawArticle.attributes.title,
-          slug,
-          new Date(rawArticle.attributes.date),
-          rawArticle.attributes.author,
-          rawArticle.html,
-        )
-      })
-      .sort((a: Article, b: Article) => b.date.valueOf() - a.date.valueOf())
-      .map((a) => a.meta)
+    const keys = await context.keys()
+    const rawArticles = new Map<string, RawArticle>()
+    for (const k of keys) {
+      rawArticles.set(k, context(k))
+    }
+    return parseArticles(rawArticles)
   },
   async loadArticle (_ctx, slug: string): Promise<Article> {
-    const rawArticle = await import(`~/content/articles/${slug}.md`)
-    const {title, date, author} = rawArticle.attributes
+    const context = await require.context('~/content/articles', true, /\.md$/)
+    const keys = await context.keys()
+    const key = keys.find((k) => Article.toSlug(k) === slug)
+    const rawArticle = await import(`~/content/articles/${key.replace(/^\.\//, '')}`)
+    const {title, date, author, series} = rawArticle.attributes
     return new Article(
       title,
-      undefined,
+      key,
       new Date(date),
       author,
       rawArticle.html,
+      series,
+      [],
     )
   },
   async loadAbout (): Promise<Article> {
@@ -51,6 +49,8 @@ export const actions: ActionTree<State, State> = {
       new Date(date),
       author,
       rawArticle.html,
+      undefined,
+      [],
     )
   },
 }
