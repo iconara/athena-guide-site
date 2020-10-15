@@ -8,7 +8,7 @@ export interface ArticleMeta {
   readonly series?: SeriesMeta
 }
 
-type SeriesMeta = {
+export type SeriesMeta = {
   slug: string
   index: number
 }
