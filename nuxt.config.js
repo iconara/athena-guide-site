@@ -1,5 +1,4 @@
 import path from 'path'
-import glob from 'glob'
 import MarkdownMode from 'frontmatter-markdown-loader/mode'
 import markdownIt from 'markdown-it'
 import markdownItAnchor from 'markdown-it-anchor'
