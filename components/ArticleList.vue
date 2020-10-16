@@ -9,14 +9,14 @@
         <nuxt-link
           :to="{path: `/articles/${article.slug}/`}"
           :title="article.preamble"
-          v-text="article.title"
           :class="{'current': isCurrent(article)}"
+          v-text="article.title"
         />
         <span
           v-if="!inline"
-          v-text="articleControlText(article)"
-          @click="toggleExpansion(article)"
           :class="{'series-toggle': true, 'current': isCurrent(article)}"
+          @click="toggleExpansion(article)"
+          v-text="articleControlText(article)"
         />
       </span>
       <div v-if="!inline && isExpanded(article)">
@@ -56,7 +56,7 @@ export default Vue.extend({
   data () {
     return {
       articles: [],
-      expandedArticles: <string[]>[],
+      expandedArticles: [] as string[],
     }
   },
   methods: {
@@ -77,7 +77,7 @@ export default Vue.extend({
       }
     },
     isExpanded (article: Article): boolean {
-      return this.isCurrent(article) || this.expandedArticles.indexOf(article.slug) > -1
+      return this.isCurrent(article) || this.expandedArticles.includes(article.slug)
     },
     childTitle (article: Article, child: Article): string {
       if (child.title.startsWith(article.title)) {
