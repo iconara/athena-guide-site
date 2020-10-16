@@ -3,11 +3,8 @@
     title="About the Athena Guide"
     :includes-article-list="true"
   >
-    <div
-      v-if="about"
-      class="body"
-      v-html="about.body"
-    /> <!-- eslint-disable-line vue/no-v-html -->
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div v-if="about" class="body" v-html="about.body"/>
   </default-layout>
 </template>
 
@@ -15,12 +12,10 @@
 import Vue from 'vue'
 import {Article} from '@/lib/articles'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import ArticleList from '@/components/ArticleList.vue'
 
 export default Vue.extend({
   components: {
     DefaultLayout,
-    ArticleList,
   },
   async fetch () {
     const about: Article = await this.$store.dispatch('loadAbout')

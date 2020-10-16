@@ -45,7 +45,7 @@ export const actions: ActionTree<State, State> = {
     const {title, date, author} = rawArticle.attributes
     return new Article(
       title,
-      undefined,
+      'about.md',
       new Date(date),
       author,
       rawArticle.html,
