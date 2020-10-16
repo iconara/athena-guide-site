@@ -1,16 +1,25 @@
 <template>
   <div class="default-layout">
-    <logo
-      class="corner-logo"
-      :tagline="false"
-      :multiline="true"
-      :backlink="true"
-    />
+    <nav class="top">
+      <div
+        class="toggle"
+        @click="toggleMenu"
+        v-text="menuIcon"
+      />
+      <article-list
+        :class="{'open': showMenu}"
+      />
+      <logo
+        :tagline="false"
+        :multiline="true"
+        :backlink="true"
+      />
+    </nav>
     <h1 v-if="title" v-text="title"/>
     <article class="main-content">
       <slot/>
     </article>
-    <nav class="article-list">
+    <nav class="sidebar">
       <h2>All articles</h2>
       <article-list/>
     </nav>
@@ -44,6 +53,21 @@ export default Vue.extend({
       default: (new Date()).getUTCFullYear(),
     },
   },
+  data () {
+    return {
+      showMenu: false,
+    }
+  },
+  computed: {
+    menuIcon (): string {
+      return this.showMenu ? '×' : '≡'
+    },
+  },
+  methods: {
+    toggleMenu (): void {
+      this.showMenu = !this.showMenu
+    },
+  },
 })
 </script>
 
@@ -56,14 +80,22 @@ export default Vue.extend({
   column-gap: 10ch;
   margin: 5rem 5rem 8rem 5rem;
 
-  .corner-logo {
+  nav.top {
     grid-column: 3;
     grid-row: 1;
     margin-bottom: 6rem;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 6px;
+    flex-direction: row;
+
+    .toggle,
+    .article-list {
+      display: none;
+    }
+
+    .logo {
+      display: block;
+      font-size: 6px;
+    }
   }
 
   h1 {
@@ -82,7 +114,7 @@ export default Vue.extend({
     grid-row: 3;
   }
 
-  .article-list {
+  nav.sidebar {
     grid-column: 3;
     grid-row: 3;
 
@@ -98,15 +130,46 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
 
-    .corner-logo {
-      align-items: flex-end;
+    nav.top {
+      position: relative;
+
+      .toggle {
+        display: block;
+        cursor: pointer;
+        user-select: none;
+        margin-top: 1.5rem;
+        width: 0rem;
+        flex-shrink: 0;
+        flex-grow: 0;
+        font-size: 300%;
+      }
+
+      .article-list {
+        display: block;
+        visibility: hidden;
+        height: 1px;
+        position: relative;
+        left: 0em;
+        top: 5rem;
+        flex-shrink: 1;
+        flex-grow: 1;
+      }
+
+      .article-list.open {
+        visibility: visible;
+        height: auto;
+      }
+
+      .logo {
+        width: 9rem;
+      }
     }
 
     .main-header {
       align-self: inherit;
     }
 
-    .article-list {
+    nav.sidebar {
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
       margin-top: 2rem;
@@ -119,11 +182,7 @@ export default Vue.extend({
 
 @media all and (max-width: 599px) {
   .default-layout {
-    margin: 3rem 2rem 8rem 1.5rem;
-
-    .corner-logo {
-      font-size: 4px;
-    }
+    margin: 1rem 2rem 8rem 1.5rem;
   }
 }
 </style>
