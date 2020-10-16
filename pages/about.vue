@@ -1,7 +1,6 @@
 <template>
   <default-layout
     title="About the Athena Guide"
-    :includes-article-list="true"
   >
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="about" class="body" v-html="about.body"/>
