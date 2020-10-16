@@ -65,7 +65,7 @@ function parseRawArticles (rawArticles: Map<string, RawArticle>): Article[] {
     allArticles.push(new Article(
       rawArticle.attributes.title || '',
       localPath,
-      rawArticle.attributes.date && rawArticle.attributes.date || null,
+      (rawArticle.attributes.date && rawArticle.attributes.date) || null,
       rawArticle.attributes.author,
       rawArticle.html,
       createSeriesMeta(localPath, rawArticle.attributes.series),

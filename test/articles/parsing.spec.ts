@@ -11,7 +11,7 @@ describe('parseArticles', () => {
         title: 'Hello',
         date: '2020-10-11',
         author: 'Mr Foo',
-      }
+      },
     })
     rawArticles.set('./world.md', {
       html: '<p>World</p>',
@@ -19,7 +19,7 @@ describe('parseArticles', () => {
         title: 'World',
         date: '2020-10-15',
         author: 'Ms Bar',
-      }
+      },
     })
     rawArticles.set('./the-third.md', {
       html: '<p>Third</p>',
@@ -27,7 +27,7 @@ describe('parseArticles', () => {
         title: '3rd',
         date: '2020-01-01',
         author: 'Ms Bar',
-      }
+      },
     })
     return rawArticles
   })
@@ -37,7 +37,7 @@ describe('parseArticles', () => {
     return parseArticles(rawArticles)
   })
 
-  it('parses raw articles into Article objects', async () => {
+  it('parses raw articles into Article objects', () => {
     const articles = <Article[]>get('articles')
     expect(articles).toHaveLength(3)
     expect(articles[1].body).toBe('<p>Hello</p>')
@@ -85,7 +85,7 @@ describe('parseArticles', () => {
           title: 'Deep 1',
           date: '2020-10-11',
           author: 'Mr Foo',
-        }
+        },
       })
       rawArticles.set('./very/very/deep2.md', {
         html: '<p>Deep 2</p>',
@@ -93,7 +93,7 @@ describe('parseArticles', () => {
           title: 'Deep 2',
           date: '2020-10-11',
           author: 'Mr Foo',
-        }
+        },
       })
       rawArticles.set('./very/very/deep3.md', {
         html: '<p>Deep 3</p>',
@@ -104,7 +104,7 @@ describe('parseArticles', () => {
           series: {
             slug: 'something-else',
           },
-        }
+        },
       })
       return rawArticles
     })
@@ -143,7 +143,7 @@ describe('parseArticles', () => {
             slug: 'hello',
             index: 2,
           },
-        }
+        },
       })
       rawArticles.set('./hello-1.md', {
         html: '<p>Hello 1</p>',
@@ -155,7 +155,7 @@ describe('parseArticles', () => {
             slug: 'hello',
             index: 1,
           },
-        }
+        },
       })
       rawArticles.set('./the-third-a.md', {
         html: '<p>Third A</p>',
@@ -250,7 +250,7 @@ describe('parseArticles', () => {
             series: {
               slug: 'hello',
             },
-          }
+          },
         })
         rawArticles.set('./hello-4.md', {
           html: '<p>Hello 4</p>',
@@ -261,7 +261,7 @@ describe('parseArticles', () => {
             series: {
               slug: 'hello',
             },
-          }
+          },
         })
         rawArticles.set('./hello-3.md', {
           html: '<p>Hello 3</p>',
@@ -272,7 +272,7 @@ describe('parseArticles', () => {
             series: {
               slug: 'hello',
             },
-          }
+          },
         })
         return rawArticles
       })
@@ -302,7 +302,7 @@ describe('parseArticles', () => {
           series: {
             index: 3,
           },
-        }
+        },
       })
       rawArticles.set('./something-else.md', {
         html: '<p>Something Else</p>',
@@ -313,7 +313,7 @@ describe('parseArticles', () => {
           series: {
             index: 4,
           },
-        }
+        },
       })
       return rawArticles
     })
