@@ -74,14 +74,32 @@ export default Vue.extend({
   }
 }
 
-@media all and (max-width: 659px) {
+@media all and (max-width: 649px) {
   .front-layout {
     margin-top: 4rem;
-    grid-template-columns: 1fr 55ch 1fr;
+    display: block;
   }
 
   .logo {
-    font-size: 70%;
+    font-size: 50%;
+  }
+
+  .articles {
+    display: block;
+
+    /deep/ .article-link {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /deep/ .about-link {
+      display: block;
+      margin-top: 1.5rem;
+    }
+
+    /deep/ .article-link::after {
+      content: "";
+    }
   }
 }
 </style>
