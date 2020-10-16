@@ -17,7 +17,7 @@ export default Vue.extend({
     DefaultLayout,
   },
   async fetch () {
-    const about: Article = await this.$store.dispatch('loadAbout')
+    const about: Article = await this.$store.dispatch('articles/loadAbout')
     this.about = about
   },
   data () {
