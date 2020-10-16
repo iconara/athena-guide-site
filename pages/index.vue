@@ -11,13 +11,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
 import Logo from '@/components/Logo.vue'
 import ArticleList from '@/components/ArticleList.vue'
 
 export default Vue.extend({
   components: {
-    DefaultLayout,
     Logo,
     ArticleList,
   },
