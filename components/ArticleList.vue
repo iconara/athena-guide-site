@@ -32,7 +32,9 @@
     </div>
     <span class="about-link">
       <nuxt-link
-        :to="{path: '/about/'}">
+        :to="{path: '/about/'}"
+        :class="{'current': isAboutCurrent()}"
+      >
         About the Athena Guide
       </nuxt-link>
     </span>
@@ -94,6 +96,9 @@ export default Vue.extend({
       } else {
         return article.slug === slug || article.children.some((a) => a.slug === slug)
       }
+    },
+    isAboutCurrent (): boolean {
+      return this.$route.name === 'about'
     },
   },
 })
