@@ -13,7 +13,7 @@
           v-text="article.title"
         />
         <span
-          v-if="!inline"
+          v-if="!inline && hasChildren(article)"
           :class="{'series-toggle': true, 'current': isCurrent(article)}"
           @click="toggleExpansion(article)"
           v-text="articleControlText(article)"
@@ -63,11 +63,7 @@ export default Vue.extend({
   },
   methods: {
     articleControlText (article: Article): string {
-      if (article.children.length > 0) {
-        return this.expandedArticles.includes(article.slug!) ? '−' : '+'
-      } else {
-        return ''
-      }
+      return this.expandedArticles.includes(article.slug!) ? '−' : '+'
     },
     toggleExpansion (article: Article): void {
       const key = article.slug!
@@ -77,6 +73,9 @@ export default Vue.extend({
       } else {
         this.expandedArticles.splice(index, 1)
       }
+    },
+    hasChildren (article: Article): boolean {
+      return article.children.length > 0
     },
     isExpanded (article: Article): boolean {
       return this.isCurrent(article) || this.expandedArticles.includes(article.slug)
@@ -118,6 +117,7 @@ export default Vue.extend({
   .series-toggle {
     cursor: pointer;
     font-size: 120%;
+    line-height: 80%;
 
     &.current {
       display: none;
@@ -129,12 +129,12 @@ export default Vue.extend({
     margin-left: 1em;
 
     &.current {
-      margin-left: 0.2em;
+      margin-left: 0.25em;
     }
   }
 
   .current {
-    margin-left: -0.8em;
+    margin-left: -0.75em;
   }
 
   .current::before {
