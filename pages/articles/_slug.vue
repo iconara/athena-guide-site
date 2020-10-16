@@ -9,11 +9,7 @@
         by <span class="name">{{author}}</span>
       </div>
     </div>
-    <div
-      v-if="body"
-      class="body"
-      v-html="body"
-    /> <!-- eslint-disable-line vue/no-v-html -->
+    <div v-if="body" class="body" v-html="body"/> <!-- eslint-disable-line vue/no-v-html -->
   </default-layout>
 </template>
 
@@ -30,7 +26,7 @@ export default Vue.extend({
     this.loading = true
     try {
       const slug = this.$route.params.slug
-      const article = <Article>(await this.$store.dispatch('loadArticle', slug))
+      const article = (await this.$store.dispatch('loadArticle', slug)) as Article
       this.title = article.title
       this.author = article.author
       this.displayDate = article.isoDate
