@@ -6,7 +6,7 @@
       :multiline="true"
       :backlink="true"
     />
-    <h1 v-if="title">{{title}}</h1>
+    <h1 v-if="title" v-text="title"/>
     <article class="main-content">
       <slot/>
     </article>
