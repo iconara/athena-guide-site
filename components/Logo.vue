@@ -2,7 +2,7 @@
   <div class="logo">
     <nuxt-link
       tag="h1"
-      :to="{path: '/'}"
+      :to="{path: '/about/'}"
       :style="{'text-align': (multiline ? 'center' : 'left'), 'cursor': (backlink ? 'pointer' : 'auto')}"
     >
       <span class="the">The</span>
