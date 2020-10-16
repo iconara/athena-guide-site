@@ -26,7 +26,7 @@ export default Vue.extend({
     this.loading = true
     try {
       const slug = this.$route.params.slug
-      const article = (await this.$store.dispatch('loadArticle', slug)) as Article
+      const article = (await this.$store.dispatch('articles/loadArticle', slug)) as Article
       this.title = article.title
       this.author = article.author
       this.displayDate = article.isoDate
