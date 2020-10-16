@@ -8,7 +8,6 @@ import uslug from 'uslug'
 markdownItAnchor.defaults.slugify = uslug
 
 export default {
-  mode: 'universal',
   target: 'static',
   head: {
     htmlAttrs: {
