@@ -1,5 +1,5 @@
 <template>
-  <nav class="articles">
+  <nav class="article-list">
     <div
       v-for="article in articles"
       :key="article.path"
@@ -9,14 +9,14 @@
         <nuxt-link
           :to="{path: `/articles/${article.slug}/`}"
           :title="article.preamble"
-          v-text="article.title"
           :class="{'current': isCurrent(article)}"
+          v-text="article.title"
         />
         <span
-          v-if="!inline"
-          v-text="articleControlText(article)"
-          @click="toggleExpansion(article)"
+          v-if="!inline && hasChildren(article)"
           :class="{'series-toggle': true, 'current': isCurrent(article)}"
+          @click="toggleExpansion(article)"
+          v-text="articleControlText(article)"
         />
       </span>
       <div v-if="!inline && isExpanded(article)">
@@ -32,7 +32,9 @@
     </div>
     <span class="about-link">
       <nuxt-link
-        :to="{path: '/about/'}">
+        :to="{path: '/about/'}"
+        :class="{'current': isAboutCurrent()}"
+      >
         About the Athena Guide
       </nuxt-link>
     </span>
@@ -56,16 +58,12 @@ export default Vue.extend({
   data () {
     return {
       articles: [],
-      expandedArticles: <string[]>[],
+      expandedArticles: [] as string[],
     }
   },
   methods: {
     articleControlText (article: Article): string {
-      if (article.children.length > 0) {
-        return this.expandedArticles.includes(article.slug!) ? '−' : '+'
-      } else {
-        return ''
-      }
+      return this.expandedArticles.includes(article.slug!) ? '−' : '+'
     },
     toggleExpansion (article: Article): void {
       const key = article.slug!
@@ -76,8 +74,11 @@ export default Vue.extend({
         this.expandedArticles.splice(index, 1)
       }
     },
+    hasChildren (article: Article): boolean {
+      return article.children.length > 0
+    },
     isExpanded (article: Article): boolean {
-      return this.isCurrent(article) || this.expandedArticles.indexOf(article.slug) > -1
+      return this.isCurrent(article) || this.expandedArticles.includes(article.slug)
     },
     childTitle (article: Article, child: Article): string {
       if (child.title.startsWith(article.title)) {
@@ -94,6 +95,9 @@ export default Vue.extend({
       } else {
         return article.slug === slug || article.children.some((a) => a.slug === slug)
       }
+    },
+    isAboutCurrent (): boolean {
+      return this.$route.name === 'about'
     },
   },
 })
@@ -113,6 +117,7 @@ export default Vue.extend({
   .series-toggle {
     cursor: pointer;
     font-size: 120%;
+    line-height: 80%;
 
     &.current {
       display: none;
@@ -124,12 +129,12 @@ export default Vue.extend({
     margin-left: 1em;
 
     &.current {
-      margin-left: 0.2em;
+      margin-left: 0.25em;
     }
   }
 
   .current {
-    margin-left: -0.8em;
+    margin-left: -0.75em;
   }
 
   .current::before {

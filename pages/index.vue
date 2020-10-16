@@ -11,13 +11,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
 import Logo from '@/components/Logo.vue'
 import ArticleList from '@/components/ArticleList.vue'
 
 export default Vue.extend({
   components: {
-    DefaultLayout,
     Logo,
     ArticleList,
   },
@@ -45,7 +43,7 @@ export default Vue.extend({
   font-size: 110%;
 }
 
-.articles {
+.article-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -84,7 +82,7 @@ export default Vue.extend({
     font-size: 50%;
   }
 
-  .articles {
+  .article-list {
     display: block;
 
     /deep/ .article-link {

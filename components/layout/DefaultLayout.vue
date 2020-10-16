@@ -1,26 +1,25 @@
 <template>
   <div class="default-layout">
     <logo
-      v-if="includeLogo"
       class="corner-logo"
       :tagline="false"
       :multiline="true"
       :backlink="true"
     />
-    <h1 v-if="title">{{title}}</h1>
+    <h1 v-if="title" v-text="title"/>
     <article class="main-content">
       <slot/>
     </article>
-    <nav
-      v-if="includesArticleList"
-      class="article-list"
-    >
+    <nav class="article-list">
       <h2>All articles</h2>
       <article-list/>
     </nav>
-    <footer v-if="includeCopyright">
+    <footer>
       &copy; {{copyrightYear}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
-      – <nuxt-link :to="{path: '/legal/'}">Legal</nuxt-link>
+      –
+      <nuxt-link :to="{path: '/legal/'}">
+        Legal
+      </nuxt-link>
     </footer>
   </div>
 </template>
@@ -39,18 +38,6 @@ export default Vue.extend({
     title: {
       type: String,
       default: null,
-    },
-    includeLogo: {
-      type: Boolean,
-      default: true,
-    },
-    includeCopyright: {
-      type: Boolean,
-      default: true,
-    },
-    includesArticleList: {
-      type: Boolean,
-      default: false,
     },
     copyrightYear: {
       type: Number,

@@ -2,7 +2,6 @@
   <default-layout
     :title="title"
     :copyright-year="copyrightYear"
-    :includes-article-list="true"
   >
     <div class="meta">
       <div class="date" v-text="displayDate"/>
