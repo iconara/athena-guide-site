@@ -1,5 +1,5 @@
 <template>
-  <nav class="articles">
+  <nav class="article-list">
     <div
       v-for="article in articles"
       :key="article.path"

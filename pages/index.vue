@@ -45,7 +45,7 @@ export default Vue.extend({
   font-size: 110%;
 }
 
-.articles {
+.article-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -84,7 +84,7 @@ export default Vue.extend({
     font-size: 50%;
   }
 
-  .articles {
+  .article-list {
     display: block;
 
     /deep/ .article-link {
