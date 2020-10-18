@@ -1,11 +1,3 @@
-import path from 'path'
-import MarkdownMode from 'frontmatter-markdown-loader/mode'
-import markdownIt from 'markdown-it'
-import markdownItAnchor from 'markdown-it-anchor'
-import uslug from 'uslug'
-
-markdownItAnchor.defaults.slugify = uslug
-
 export default {
   target: 'static',
   head: {
@@ -36,29 +28,11 @@ export default {
   ],
   modules: [
     '@nuxtjs/style-resources',
+    '@nuxt/content',
   ],
   plugins: [
     {src: '~/plugins/analytics.ts', mode: 'client'},
   ],
-  build: {
-    extend (config, _ctx) {
-      config.module.rules.push({
-        test: /\.md$/,
-        loader: 'frontmatter-markdown-loader',
-        include: path.resolve(__dirname, 'content'),
-        options: {
-          mode: [MarkdownMode.HTML],
-          vue: {
-            root: 'markdown-body',
-          },
-          markdownIt: markdownIt({
-            typographer: true,
-            langPrefix: 'language-',
-          }).use(markdownItAnchor),
-        },
-      })
-    },
-  },
   env: {
     baseUrl: process.env.BASE_URL || '',
   },

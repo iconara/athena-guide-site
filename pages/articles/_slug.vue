@@ -1,61 +1,58 @@
 <template>
   <default-layout
-    :title="title"
+    :title="article.title"
     :copyright-year="copyrightYear"
   >
     <div class="meta">
       <div class="date" v-text="displayDate"/>
-      <div v-if="author" class="author">
-        by <span class="name">{{author}}</span>
+      <div v-if="article.author" class="author">
+        by <span class="name" v-text="article.author"/>
       </div>
     </div>
-    <div v-if="body" class="body" v-html="body"/> <!-- eslint-disable-line vue/no-v-html -->
+    <nuxt-content :document="article"/>
   </default-layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import {MetaInfo} from 'vue-meta'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import {Article} from '@/lib/articles'
+import {Article, loadArticle} from '~/lib/articles'
 
 export default Vue.extend({
   components: {
     DefaultLayout,
   },
-  async fetch () {
-    this.loading = true
-    try {
-      const slug = this.$route.params.slug
-      const article = (await this.$store.dispatch('articles/loadArticle', slug)) as Article
-      this.title = article.title
-      this.author = article.author
-      this.displayDate = article.isoDate
-      this.copyrightYear = article.copyrightYear || (new Date()).getUTCFullYear()
-      this.body = article.body
-      this.preamble = article.preamble
-    } finally {
-      this.loading = false
+  async asyncData ({$content, params}) {
+    return {
+      article: await loadArticle($content, params.slug),
     }
   },
   data () {
     return {
-      copyrightYear: null as unknown as number,
-      title: '',
-      author: undefined as unknown as string | undefined,
-      displayDate: '' as string | null,
-      body: '',
-      preamble: '',
-      loading: false,
+      article: null as unknown as Article,
     }
   },
-  head () {
+  computed: {
+    displayDate (): string | undefined {
+      return this.article.date
+    },
+    copyrightYear (): number | undefined {
+      if (this.article.date) {
+        return parseInt(this.article.date.substring(0, 4))
+      } else {
+        return undefined
+      }
+    },
+  },
+  head (): MetaInfo {
     return {
-      title: (this as any).title,
+      title: this.article.title,
       meta: [
-        {hid: 'description', name: 'description', content: (this as any).preamble},
+        {hid: 'description', name: 'description', content: this.article?.preamble || ''},
       ],
       link: [
-        {hid: 'canonical', rel: 'canonical', href: `${process.env.baseUrl}/articles/${this.$route.params.slug}/`},
+        {hid: 'canonical', rel: 'canonical', href: `${process.env.baseUrl}/articles/${this.article.slug}/`},
       ],
     }
   },

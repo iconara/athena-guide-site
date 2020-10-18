@@ -2,7 +2,7 @@
   <nav class="article-list">
     <div
       v-for="article in articles"
-      :key="article.path"
+      :key="article.slug"
       class="article-link"
     >
       <span>
@@ -22,7 +22,7 @@
       <div v-if="!inline && isExpanded(article)">
         <nuxt-link
           v-for="child in article.children"
-          :key="child.path"
+          :key="child.slug"
           :to="{path: `/articles/${child.slug}/`}"
           :title="child.preamble"
           :class="{'child': true, 'current': isCurrent(article, child)}"
@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Article} from '@/lib/articles'
+import {Article, loadArticles} from '~/lib/articles'
 
 export default Vue.extend({
   props: {
@@ -53,11 +53,11 @@ export default Vue.extend({
     },
   },
   async fetch () {
-    this.articles = await this.$store.dispatch('articles/loadArticles')
+    this.articles = await loadArticles(this.$content)
   },
   data () {
     return {
-      articles: [],
+      articles: [] as Article[],
       expandedArticles: [] as string[],
     }
   },
@@ -80,8 +80,8 @@ export default Vue.extend({
     isExpanded (article: Article): boolean {
       return this.isCurrent(article) || this.expandedArticles.includes(article.slug)
     },
-    childTitle (article: Article, child: Article): string {
-      if (child.title.startsWith(article.title)) {
+    childTitle (article: Article, child: Article): string | undefined {
+      if (article.title && child.title?.startsWith(article.title)) {
         const r = new RegExp(`^${article.title}:\\s+`)
         return child.title.replace(r, '')
       } else {
