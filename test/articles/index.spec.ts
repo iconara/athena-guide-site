@@ -1,6 +1,6 @@
 import {contentFunc} from '@nuxt/content/types/content'
 import {def, get} from 'bdd-lazy-var'
-import {loadArticles, loadArticle} from '~/lib/articles'
+import {loadArticles, loadArticle, loadAbout} from '~/lib/articles'
 
 type Overrides = {
   dir?: string
@@ -356,6 +356,48 @@ describe('loadArticle', () => {
       expect.assertions(1)
       try {
         await loadArticle(<contentFunc>get('content'), 'third')
+      } catch (error) {
+        expect(error.message).toBe('b0rk')
+      }
+    })
+  })
+})
+
+describe('loadAbout', () => {
+  def('about', () => {
+    return createRawArticle('About', '2020-10-15', {dir: '/'})
+  })
+
+  def('aboutPromise', () => {
+    return Promise.resolve(get('about'))
+  })
+
+  def('fetch', () => {
+    return jest.fn(() => get('aboutPromise'))
+  })
+
+  def('content', () => {
+    const fetch = get('fetch')
+    return jest.fn(() => ({fetch}))
+  })
+
+  it('loads the about content using the content function', async () => {
+    await loadAbout(<contentFunc>get('content'))
+    const content = get('content')
+    const fetch = get('fetch')
+    expect(content).toHaveBeenCalledWith('about')
+    expect(fetch).toHaveBeenCalled()
+  })
+
+  describe('when loading the content returns an error', () => {
+    def('aboutPromise', () => {
+      return Promise.reject(new Error('b0rk'))
+    })
+
+    it('propagates the error', async () => {
+      expect.assertions(1)
+      try {
+        await loadAbout(<contentFunc>get('content'))
       } catch (error) {
         expect(error.message).toBe('b0rk')
       }

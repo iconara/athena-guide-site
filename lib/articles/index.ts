@@ -194,3 +194,7 @@ export async function loadArticle (content: contentFunc, slug: string): Promise<
     return null
   }
 }
+
+export async function loadAbout (content: contentFunc): Promise<Article> {
+  return toArticle(await content('about').fetch<any>())
+}

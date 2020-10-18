@@ -1,14 +1,14 @@
 <template>
-  <default-layout
-    title="About the Athena Guide"
-  >
+  <default-layout title="About the Athena Guide">
     <nuxt-content :document="article"/>
   </default-layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import {MetaInfo} from 'vue-meta'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
+import {loadAbout} from '~/lib/articles'
 
 export default Vue.extend({
   components: {
@@ -16,10 +16,10 @@ export default Vue.extend({
   },
   async asyncData ({$content}) {
     return {
-      article: await $content('about').fetch(),
+      article: await loadAbout($content),
     }
   },
-  head () {
+  head (): MetaInfo {
     return {
       title: 'About',
     }
