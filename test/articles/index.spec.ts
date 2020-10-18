@@ -9,7 +9,7 @@ type Overrides = {
 
 function createRawArticle (title: string, date: string, overrides: Overrides = {}) {
   return {
-    slug: title.toLowerCase(),
+    slug: title.toLowerCase().replace(/[^\d\w]+/g, '-'),
     dir: overrides.dir || '/articles',
     date: date + 'T12:34:56.789Z',
     author: 'The Author',
@@ -239,6 +239,70 @@ describe('loadArticles', () => {
           'A3',
           'A4',
         ])
+      })
+    })
+
+    describe('and the articles in the series have a common prefix', () => {
+      def('rawArticles', () => {
+        return [
+          createRawArticle('Hello First', '2020-10-15', {dir: '/articles/s1'}),
+          createRawArticle('Hello Second', '2020-10-15', {dir: '/articles/s1'}),
+          createRawArticle('Hello Third', '2020-10-15', {dir: '/articles/s1'}),
+          createRawArticle('Hello Fourth', '2020-10-15', {dir: '/articles/s1'}),
+        ]
+      })
+
+      it('uses the prefix for title of the parent article, stripping spaces', async () => {
+        const articles = await loadArticles(<contentFunc>get('content'))
+        expect(articles[0].title).toBe('Hello')
+      })
+
+      it('removes the prefix from the child articles titles', async () => {
+        const articles = await loadArticles(<contentFunc>get('content'))
+        const titles = articles[0].children.map((a) => a.title)
+        expect(titles).toEqual([
+          'Second',
+          'Third',
+          'Fourth',
+        ])
+      })
+
+      describe('and the prefix ends with a colon and space', () => {
+        def('rawArticles', () => {
+          return [
+            createRawArticle('Hello: First', '2020-10-15', {dir: '/articles/s1'}),
+            createRawArticle('Hello: Second', '2020-10-15', {dir: '/articles/s1'}),
+            createRawArticle('Hello: Third', '2020-10-15', {dir: '/articles/s1'}),
+            createRawArticle('Hello: Fourth', '2020-10-15', {dir: '/articles/s1'}),
+          ]
+        })
+
+        it('does not include the colon and space from the parent title', async () => {
+          const articles = await loadArticles(<contentFunc>get('content'))
+          expect(articles[0].title).toBe('Hello')
+        })
+      })
+
+      describe('and the common prefix is shorter than four characters', () => {
+        def('rawArticles', () => {
+          return [
+            createRawArticle('XY First', '2020-10-15', {dir: '/articles/s1'}),
+            createRawArticle('XY Second', '2020-10-15', {dir: '/articles/s1'}),
+            createRawArticle('XY Third', '2020-10-15', {dir: '/articles/s1'}),
+            createRawArticle('XY Fourth', '2020-10-15', {dir: '/articles/s1'}),
+          ]
+        })
+
+        it('does not change any titles', async () => {
+          const articles = await loadArticles(<contentFunc>get('content'))
+          const titles = articles[0].children.map((a) => a.title)
+          expect(articles[0].title).toBe('XY First')
+          expect(titles).toEqual([
+            'XY Second',
+            'XY Third',
+            'XY Fourth',
+          ])
+        })
       })
     })
   })

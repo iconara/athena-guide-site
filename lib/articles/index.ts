@@ -82,12 +82,37 @@ function childComparator (a: RawArticle, b: RawArticle): number {
   return c === 0 ? compareDateDescending(a, b) : c
 }
 
+function longestCommonPrefix (strs: string[]): string {
+  const minLength = Math.min(...strs.map((s) => s.length))
+  for (let i = 0; i < minLength; i++) {
+    const c = strs[0].charCodeAt(i)
+    for (let j = 1; j < strs.length; j++) {
+      if (strs[j].charCodeAt(i) !== c) {
+        return strs[0].substring(0, i)
+      }
+    }
+  }
+  return strs[0].substring(0, minLength)
+}
+
+function updateSeriesTitles (parent: Article): void {
+  const titles = [parent.title || '', ...parent.children.map((a) => a.title || '')]
+  const titlePrefix = longestCommonPrefix(titles)
+  if (titlePrefix.length > 3) {
+    parent.title = titlePrefix.replace(/[:\s]+$/, '')
+    for (const child of parent.children) {
+      child.title = child.title?.substring(titlePrefix.length)
+    }
+  }
+}
+
 function createArticleSeries (allSeries: IterableIterator<RawArticle[]>): Article[] {
   const articles = []
   for (const series of allSeries) {
     series.sort(childComparator)
     const parent = toArticle(series[0])
     parent.children = series.slice(1).map(toArticle)
+    updateSeriesTitles(parent)
     articles.push(parent)
   }
   return articles
