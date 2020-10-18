@@ -38,8 +38,7 @@ h3 {
 }
 
 article {
-  code,
-  pre {
+  code {
     font-family: source-code-pro, monospace;
     font-weight: 400;
     font-style: normal;
@@ -48,17 +47,23 @@ article {
     background-color: #f9f9f9;
   }
 
-  a code {
+  a code,
+  .nuxt-content code {
     background-color: transparent;
+  }
+
+  .nuxt-content pre[class*="language-"] {
+    background-color: #f9f9f9;
   }
 
   blockquote {
     color: #444;
-    border-left: 0.25rem solid #ddd;
+    border-left: 1rem solid #f9f9f9;
+    margin: 0;
     padding: 0.5rem;
 
     p {
-      margin-block-end: 0;
+      margin: 0;
     }
   }
 
@@ -66,26 +71,19 @@ article {
     margin-top: 0;
   }
 
-  .body {
-    p:first-child {
-      margin-top: 0;
-    }
-
-    pre {
-      width: 110%;
-      padding: 0.5rem;
-      margin-left: -0.5rem;
-      overflow-x: auto;
-    }
+  pre,
+  .nuxt-content pre {
+    width: 110%;
+    padding: 1rem;
+    margin-left: -1rem;
+    overflow-x: auto;
   }
 }
 
 @media all and (max-width: 959px) {
   article {
-    .body {
-      pre {
-        width: 100%;
-      }
+    pre {
+      width: 100%;
     }
   }
 }
