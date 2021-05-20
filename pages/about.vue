@@ -1,31 +1,25 @@
 <template>
-  <default-layout
-    title="About the Athena Guide"
-  >
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="about" class="body" v-html="about.body"/>
+  <default-layout title="About the Athena Guide">
+    <nuxt-content :document="article"/>
   </default-layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import {Article} from '@/lib/articles'
+import {MetaInfo} from 'vue-meta'
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
+import {loadAbout} from '~/lib/articles'
 
 export default Vue.extend({
   components: {
     DefaultLayout,
   },
-  async fetch () {
-    const about: Article = await this.$store.dispatch('articles/loadAbout')
-    this.about = about
-  },
-  data () {
+  async asyncData ({$content}) {
     return {
-      about: null as unknown as Article,
+      article: await loadAbout($content),
     }
   },
-  head () {
+  head (): MetaInfo {
     return {
       title: 'About',
     }
