@@ -1,12 +1,11 @@
-import Vue from 'vue'
-import Vuex, {MutationTree, ActionTree, GetterTree} from 'vuex'
+import {MutationTree, ActionTree, GetterTree} from 'vuex'
 import {Article, ArticleMeta} from '@/lib/articles'
 import {parseArticles, RawArticle} from '@/lib/articles/parsing'
 
-Vue.use(Vuex)
-
 export class State {
 }
+
+export const state = () => new State()
 
 export const getters: GetterTree<State, State> = {
 }
@@ -53,13 +52,4 @@ export const actions: ActionTree<State, State> = {
       [],
     )
   },
-}
-
-export default function () {
-  return new Vuex.Store({
-    state: new State(),
-    getters,
-    mutations,
-    actions,
-  })
 }

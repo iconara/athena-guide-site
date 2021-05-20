@@ -53,7 +53,7 @@ export default Vue.extend({
     },
   },
   async fetch () {
-    this.articles = await this.$store.dispatch('loadArticles')
+    this.articles = await this.$store.dispatch('articles/loadArticles')
   },
   data () {
     return {
