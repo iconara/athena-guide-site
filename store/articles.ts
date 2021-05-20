@@ -14,9 +14,9 @@ export const mutations: MutationTree<State> = {
 }
 
 export const actions: ActionTree<State, State> = {
-  async loadArticles (): Promise<ArticleMeta[]> {
-    const context = await require.context('~/content/articles', true, /\.md$/)
-    const keys = await context.keys()
+  loadArticles (): Promise<ArticleMeta[]> {
+    const context = require.context('~/content/articles', true, /\.md$/)
+    const keys = context.keys()
     const rawArticles = new Map<string, RawArticle>()
     for (const k of keys) {
       rawArticles.set(k, context(k))
@@ -24,8 +24,8 @@ export const actions: ActionTree<State, State> = {
     return parseArticles(rawArticles)
   },
   async loadArticle (_ctx, slug: string): Promise<Article> {
-    const context = await require.context('~/content/articles', true, /\.md$/)
-    const keys = await context.keys()
+    const context = require.context('~/content/articles', true, /\.md$/)
+    const keys = context.keys()
     const key = keys.find((k) => Article.toSlug(k) === slug)
     const rawArticle = await import(`~/content/articles/${key.replace(/^\.\//, '')}`)
     const {title, date, author, series} = rawArticle.attributes
