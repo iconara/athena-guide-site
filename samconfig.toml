@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "athena-guide-site"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1sn6zr65b240r"
+s3_prefix = "athena-guide-site"
+region = "us-east-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "GitHubRepositoryUrl=\"https://github.com/iconara/athena-guide-site\""
