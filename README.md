@@ -36,4 +36,11 @@ If you want to pull in content from a different branch just replace `master` wit
 
 ## Deployment
 
-Push the repository to GitHub and Amplify Console will build and deploy. See `config/hosting.cnf.yml`.
+Push the repository to GitHub and Amplify Console will build and deploy.
+
+For changes to the hosting setup, edit `template.yml` and run:
+
+```bash
+$ sam build
+$ sam deploy
+```
