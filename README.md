@@ -1,22 +1,37 @@
-# athena-guide
+# The Athena Guide
 
-> athena-guide
+This repository contains the code that generates [The Athena Guide](https://the.athena.guide/).
 
-## Build Setup
+The site is built using [Nuxt.js](https://nuxtjs.org).
+
+## Development
+
+Install all dependencies:
 
 ```bash
-# install dependencies
 $ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+Run the development server for day-to-day development, this starts a server on [localhost:3000](http://localhost:3000/):
+
+```bash
+$ yarn dev
+```
+
+Run the tests:
+
+```bash
+$ yarn jest --watch
+```
+
+### Update content
+
+The content is hosted in a separate repository, [iconara/athena-guide-content](https://github.com/iconara/athena-guide-content) and included into this repository using `git subtree`. To update anything in `content/` make a change in the source repository and then run:
+
+```bash
+$ git subtree pull --prefix content content master --squash
+```
+
+## Deployment
+
+Push the repository to GitHub and Amplify Console will build and deploy. See `config/hosting.cnf.yml`.
