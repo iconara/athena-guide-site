@@ -1,10 +1,11 @@
 const visitParents = require('unist-util-visit-parents')
 
 const transforms = [
-  [/(?<=^|[\s(])'(?=\S|$)/g, '‘'],
-  [/(?<=^|\S)'(?=[\w\s,.;:?!)]|$)/g, '’'],
-  [/(?<=^|[\s(])"(?=\S|$)/g, '“'],
-  [/(?<=^|\S)"(?=[\w\s,.;:?!)]|$)/g, '”'],
+  [/\B'(?=\S|$)/g, '‘'],
+  [/\b'\B/g, '’'],
+  [/\b'(?=\w)/g, '’'],
+  [/\B"(?=\w)/g, '“'],
+  [/\b"\B/g, '”'],
 ]
 
 function isCode (ancestors) {
