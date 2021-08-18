@@ -91,3 +91,6 @@ sw.*
 
 # Design files
 /art
+
+# AWS SAM
+/.aws-sam
