@@ -32,6 +32,8 @@ The content is hosted in a separate repository, [iconara/athena-guide-content](h
 $ git subtree pull --prefix content content master --squash
 ```
 
+If you want to pull in content from a different branch just replace `master` with the name of a branch from [iconara/athena-guide-content](https://github.com/iconara/athena-guide-content/branches).
+
 ## Deployment
 
 Push the repository to GitHub and Amplify Console will build and deploy. See `config/hosting.cnf.yml`.
