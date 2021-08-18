@@ -2,6 +2,8 @@ This guide is written by me, [Theo Tolv](https://iconara.net/). I've been workin
 
 After answering over a hundred [questions tagged `amazon-athena`][1] on Stack Overflow, I felt that there needed to be a place where the questions that come up again and can be answered. This guide is meant to cover the most frequently asked questions, and more.
 
+Since the end of 2020 I work as a senior solutions architect at AWS, but this guide is something I work on in my spare time.
+
 ## Who is this guide for?
 
 The articles in this guide are inspired by questions on Stack Overflow, and are for people learning Athena. I assume you've read parts of the [official Athena documentation][2] and know how to create tables, and run queries. I'm not covering the things that are in the getting started guides, but almost everything else. This guide is for those who wish that the official documentation went a bit more in depth in places.
