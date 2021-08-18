@@ -60,7 +60,7 @@ describe('rehype-quotes', () => {
 
     describe('and it\'s not the direct parent', () => {
       it('does not replace any double quotes', () => {
-        const tree = u('tree', [
+        const tree: any = u('tree', [
           u('element', {tagName: 'code'}, [
             u('text', 'foo'),
             u('element', {tagName: 'span'}, [
@@ -71,9 +71,9 @@ describe('rehype-quotes', () => {
         rehypeQuotes()(tree)
         expect(tree.children[0].children[1].children[0].value).toBe('a "quoted" word')
       })
-  
+
       it('does not replace any single quotes', () => {
-        const tree = u('tree', [
+        const tree: any = u('tree', [
           u('element', {tagName: 'code'}, [
             u('text', 'foo'),
             u('element', {tagName: 'span'}, [
