@@ -22,10 +22,14 @@ const SUFFIXES = [
 
 describe('rehype-quotes', () => {
   each([
-    ...PREFIXES.map(([char, name]) => [`a straight double quote with a start double quote when preceded by a ${name}`, `${char}"quoted`, `${char}“quoted`]),
-    ...PREFIXES.map(([char, name]) => [`a straight single quote with a start single quote when preceded by a ${name}`, `${char}'quoted`, `${char}‘quoted`]),
-    ...SUFFIXES.map(([char, name]) => [`a straight double quote with an end double quote when followed by a ${name}`, `quoted"${char}`, `quoted”${char}`]),
-    ...SUFFIXES.map(([char, name]) => [`a straight single quote with an end single quote when followed by a ${name}`, `quoted'${char}`, `quoted’${char}`]),
+    ...PREFIXES.map(([char, name]) => [`a straight double quote before a letter with a start double quote when preceded by a ${name}`, `${char}"quoted`, `${char}“quoted`]),
+    ...PREFIXES.map(([char, name]) => [`a straight double quote before a number with a start double quote when preceded by a ${name}`, `${char}"123`, `${char}“123`]),
+    ...PREFIXES.map(([char, name]) => [`a straight single quote before a letter with a start single quote when preceded by a ${name}`, `${char}'quoted`, `${char}‘quoted`]),
+    ...PREFIXES.map(([char, name]) => [`a straight single quote before a number with a start single quote when preceded by a ${name}`, `${char}'123`, `${char}‘123`]),
+    ...SUFFIXES.map(([char, name]) => [`a straight double quote before a letter with an end double quote when followed by a ${name}`, `quoted"${char}`, `quoted”${char}`]),
+    ...SUFFIXES.map(([char, name]) => [`a straight double quote before a number with an end double quote when followed by a ${name}`, `123"${char}`, `123”${char}`]),
+    ...SUFFIXES.map(([char, name]) => [`a straight single quote before a letter with an end single quote when followed by a ${name}`, `quoted'${char}`, `quoted’${char}`]),
+    ...SUFFIXES.map(([char, name]) => [`a straight single quote before a number with an end single quote when followed by a ${name}`, `123'${char}`, `123’${char}`]),
     ['a straight single quote with an apostrophe when between two letters', 'that\'s a word', 'that’s a word'],
   ]).it('replaces %s', (_description, input, output) => {
     const tree = u('tree', [u('text', input as string)])
