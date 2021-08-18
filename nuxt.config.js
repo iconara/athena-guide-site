@@ -36,4 +36,9 @@ export default {
   env: {
     baseUrl: process.env.BASE_URL || '',
   },
+  content: {
+    markdown: {
+      rehypePlugins: ['~/plugins/rehype-quotes.js'],
+    },
+  },
 }
