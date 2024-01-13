@@ -14,4 +14,5 @@ export default defineConfig({
   rewrites: {
     'articles/:series/:article': 'articles/:series-:article',
   },
+  cleanUrls: true,
 })
