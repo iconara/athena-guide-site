@@ -1,9 +1,25 @@
-<script setup>
+<script setup lang="ts">
 import {useData} from 'vitepress'
 import Logo from './Logo.vue'
 import ArticleList from './ArticleList.vue'
 
 const {frontmatter} = useData()
+
+function formatDate(dateString: string | undefined): string {
+  if (dateString !== undefined) {
+    return dateString.substring(0, 10)
+  } else {
+    return ''
+  }
+}
+
+function formatYear(dateString: string | undefined): string {
+  if (dateString !== undefined) {
+    return dateString.substring(0, 4)
+  } else {
+    return ''
+  }
+}
 </script>
 
 <template>
@@ -13,7 +29,7 @@ const {frontmatter} = useData()
   <h1>{{frontmatter.title}}</h1>
   <article>
     <div class="meta">
-      <div v-if="frontmatter.date" class="date" v-text="frontmatter.date"/>
+      <div v-if="frontmatter.date" class="date" v-text="formatDate(frontmatter.date)"/>
       <div v-if="frontmatter.author" class="author">
         by <span class="name" v-text="frontmatter.author"/>
       </div>
@@ -25,7 +41,7 @@ const {frontmatter} = useData()
     <ArticleList/>
   </nav>
   <footer>
-    &copy; {{frontmatter.date}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
+    &copy; {{formatYear(frontmatter.date)}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
     –
     <a href="/legal.html">Legal</a>
   </footer>
