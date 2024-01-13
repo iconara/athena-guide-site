@@ -38,7 +38,7 @@ function formatYear(dateString: string | undefined): string {
   </article>
   <nav class="sidebar">
     <h2>All articles</h2>
-    <ArticleList/>
+    <ArticleList :inline="false"/>
   </nav>
   <footer>
     &copy; {{formatYear(frontmatter.date)}} Theo Tolv, all rights reserved

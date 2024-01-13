@@ -1,16 +1,37 @@
 <script setup lang="ts">
-import {data as articles} from './articles.data'
+import {useRoute} from 'vitepress'
+import {ref} from 'vue'
+import {data as articles, type Article} from './articles.data'
 
-const props = defineProps({
+const {inline} = defineProps({
   inline: {type: Boolean, default: false},
 })
 
-function isCurrent(article): Boolean {
-  return false
+const route = useRoute()
+const expandedArticles = ref(new Set<Article>())
+
+function isCurrent(article: {url: Article['url']}): Boolean {
+  return article.url === route.path
 }
 
-function isAboutCurrent(): Boolean {
-  return false
+function isCurrentOrChildIsCurrent(article: Article): Boolean {
+  return isCurrent(article) || article.children.some(isCurrent)
+}
+
+function hasChildren(article: Article): Boolean {
+  return article.children.length > 0
+}
+
+function isExpanded(article: Article): Boolean {
+  return expandedArticles.value.has(article) || isCurrentOrChildIsCurrent(article)
+}
+
+function toggleExpansion(article: Article): void {
+  if (expandedArticles.value.has(article)) {
+    expandedArticles.value.delete(article)
+  } else {
+    expandedArticles.value.add(article)
+  }
 }
 </script>
 
@@ -25,30 +46,33 @@ function isAboutCurrent(): Boolean {
         <a
           :href="article.url"
           :title="article.title"
-          :class="{current: isCurrent(article)}"
-          >{{ article.title }}</a>
-        <!-- <span
-          v-if="!inline && hasChildren(article)"
+          :class="{'current': isCurrent(article)}"
+          >{{article.title}}</a>
+        <span
+          v-if="!inline && hasChildren(article) && !isExpanded(article)"
           :class="{'series-toggle': true, 'current': isCurrent(article)}"
           @click="toggleExpansion(article)"
-          v-text="articleControlText(article)"
-        /> -->
+          >+</span>
+        <span
+          v-if="!inline && hasChildren(article) && !isCurrentOrChildIsCurrent(article) && isExpanded(article)"
+          :class="{'series-toggle': true, 'current': isCurrent(article)}"
+          @click="toggleExpansion(article)"
+          >–</span>
       </span>
-      <!-- <div v-if="!inline && isExpanded(article)">
-        <nuxt-link
+      <div v-if="!inline && isExpanded(article)">
+        <a
           v-for="child in article.children"
-          :key="child.slug"
-          :to="{path: `/articles/${child.slug}/`}"
-          :title="child.preamble"
-          :class="{'child': true, 'current': isCurrent(article, child)}"
-          v-text="childTitle(article, child)"
-        />
-      </div> -->
+          :key="child.url"
+          :href="child.url"
+          :title="child.title"
+          :class="{'child': true, 'current': isCurrent(child)}"
+          >{{child.title}}</a>
+      </div>
     </div>
     <span class="about-link">
       <a
         href="/about.html"
-        :class="{current: isAboutCurrent()}"
+        :class="{'current': isCurrent({url: '/about.html'})}"
         >About the Athena Guide</a>
     </span>
   </nav>
@@ -57,61 +81,31 @@ function isAboutCurrent(): Boolean {
 <style scoped>
 .article-list {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  .article-link,
-  .about-link {
-    margin: 0;
-    margin-right: 0.5em;
-    margin-bottom: 0.5em;
-    border: none;
-  }
-
-  .about-link {
-    margin-top: 1.5em;
-  }
+  flex-direction: column;
 }
 
 .article-list.inline {
-  .article-link::after {
-    content: "/";
-    margin-left: 0.5em;
-    margin-bottom: 0;
-  }
-
-  .about-link {
-    margin-top: 0;
-  }
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-@media all and (max-width: 649px) {
-  .article-list {
-    display: block;
+.article-list.inline .article-link::after {
+  content: "/";
+  margin-left: 0.5em;
+  margin-bottom: 0;
+}
 
-    .article-link {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .about-link {
-      display: block;
-      margin-top: 1.5rem;
-    }
-  }
-
-  .article-list.inline {
-    .article-link::after {
-      content: "";
-    }
-  }
+.article-list.inline .about-link {
+  margin-top: 0;
 }
 
 .article-link,
 .about-link {
   display: block;
   margin-bottom: 0.5rem;
-  user-select: none;
+  margin: 0;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .article-link a,
@@ -119,8 +113,13 @@ function isAboutCurrent(): Boolean {
   border: none;
 }
 
+.about-link {
+  margin-top: 1.5em;
+}
+
 .article-link .series-toggle {
   cursor: pointer;
+  margin-left: 0.2em;
   font-size: 120%;
   line-height: 80%;
 }
