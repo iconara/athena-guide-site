@@ -3,5 +3,15 @@
   "version": "1.0.0",
   "description": "This guide explains the not so obvious aspects of how to use Amazon Athena to its full potential, including how and why to partition your data, how to get the best performance, and lowest cost, and how to use it as the engine for your data lake.",
   "author": "Theo Tolv",
-  "private": true
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "vitepress": "^1.0.0-rc.36"
+  },
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  }
 }

@@ -1,4 +1,6 @@
 /.aws-sam
+/.vitepress/cache
+/.vitepress/dist
 /art
 /node_modules/
 /yarn-error.log*
