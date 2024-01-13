@@ -46,7 +46,7 @@ Resources:
         - Name: _BUILD_TIMEOUT
           Value: 5
       BuildSpec: |-
-        version: 0.1
+        version: 1
         frontend:
           phases:
             build:
