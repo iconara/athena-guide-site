@@ -1,18 +1,22 @@
 <script setup>
+import {useRouter} from 'vitepress'
+
 const props = defineProps({
   tagline: {type: Boolean, default: false},
   multiline: {type: Boolean, default: true},
   backlink: {type: String, default: '/about'},
 })
 
-function click() {
-  // ?
+const router = useRouter()
+
+function goToAbout() {
+  router.go('/about')
 }
 </script>
 
 <template>
   <div class="logo">
-    <h1 @click="click()" :style="{'text-align': (multiline ? 'center' : 'left'), 'cursor': (backlink !== null ? 'pointer' : 'auto')}">
+    <h1 @click="goToAbout()" :style="{'text-align': (multiline ? 'center' : 'left'), 'cursor': (backlink !== null ? 'pointer' : 'auto')}">
       <span class="the">The</span>
       Athena<br v-if="multiline"><span v-else class="space"/>Guide
     </h1>
