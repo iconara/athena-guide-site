@@ -48,10 +48,9 @@ Resources:
             build:
               commands:
                 - yarn install
-                - yarn test
-                - yarn generate
+                - yarn build
           artifacts:
-            baseDirectory: dist
+            baseDirectory: .vitepress/dist
             files:
               - '**/*'
           customHeaders:
