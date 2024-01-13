@@ -41,7 +41,7 @@ function formatYear(dateString: string | undefined): string {
     <ArticleList/>
   </nav>
   <footer>
-    &copy; {{formatYear(frontmatter.date)}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
+    &copy; {{formatYear(frontmatter.date)}} Theo Tolv, all rights reserved
     –
     <a href="/legal.html">Legal</a>
   </footer>
