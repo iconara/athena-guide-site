@@ -7,42 +7,31 @@ const {frontmatter} = useData()
 </script>
 
 <template>
-  <div class="article-layout">
-    <nav class="top">
-      <Logo/>
-    </nav>
-    <h1>{{frontmatter.title}}</h1>
-    <article>
-      <div class="meta">
-        <div v-if="frontmatter.date" class="date" v-text="frontmatter.date"/>
-        <div v-if="frontmatter.author" class="author">
-          by <span class="name" v-text="frontmatter.author"/>
-        </div>
+  <nav class="top">
+    <Logo/>
+  </nav>
+  <h1>{{frontmatter.title}}</h1>
+  <article>
+    <div class="meta">
+      <div v-if="frontmatter.date" class="date" v-text="frontmatter.date"/>
+      <div v-if="frontmatter.author" class="author">
+        by <span class="name" v-text="frontmatter.author"/>
       </div>
-      <Content/>
-    </article>
-    <nav class="sidebar">
-      <h2>All articles</h2>
-      <ArticleList/>
-    </nav>
-    <footer>
-      &copy; {{frontmatter.date}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
-      –
-      <a href="/legal.html">Legal</a>
-    </footer>
-  </div>
+    </div>
+    <Content/>
+  </article>
+  <nav class="sidebar">
+    <h2>All articles</h2>
+    <ArticleList/>
+  </nav>
+  <footer>
+    &copy; {{frontmatter.date}} <a href="https://iconara.net/">Theo Tolv</a>, all rights reserved
+    –
+    <a href="/legal.html">Legal</a>
+  </footer>
 </template>
 
 <style scoped>
-.article-layout {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: 1fr minmax(55ch, 75ch) 40ch 1fr;
-  row-gap: 1rem;
-  column-gap: 10ch;
-  margin: 5rem 5rem 8rem 5rem;
-}
-
 h1 {
   grid-column: 2 / 4;
   grid-row: 2;
@@ -114,11 +103,6 @@ nav.sidebar h2 {
 }
 
 @media all and (max-width: 959px) {
-  .article-layout {
-    display: flex;
-    flex-direction: column;
-  }
-
   nav.top {
     position: relative;
   }
@@ -167,8 +151,5 @@ nav.sidebar h2 {
 }
 
 @media all and (max-width: 599px) {
-  .article-layout {
-    margin: 1rem 2rem 8rem 1.5rem;
-  }
 }
 </style>
