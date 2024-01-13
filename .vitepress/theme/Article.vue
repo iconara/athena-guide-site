@@ -46,6 +46,24 @@ const {frontmatter} = useData()
 h1 {
   grid-column: 2 / 4;
   grid-row: 2;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.meta {
+  margin-bottom: 1em;
+}
+
+.meta .date {
+  display: inline;
+}
+
+.meta .author {
+  display: inline;
+}
+
+.meta .author .name {
+  font-style: italic;
 }
 
 article {
@@ -53,66 +71,12 @@ article {
   grid-row: 3;
 }
 
-article code {
-  font-family: source-code-pro, monospace;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 90%;
-  color: #444;
-  background-color: #f9f9f9;
-}
-
-article a code,
-.nuxt-content code {
-  background-color: transparent;
-}
-
-article blockquote {
-  color: #444;
-  border-left: 1rem solid #f9f9f9;
-  margin: 0;
-  padding: 0.5rem;
-}
-
-article blockquote p {
-  margin: 0;
-}
-
-article h2:first-child {
-  margin-top: 0;
-}
-
-article pre {
-  width: 110%;
-  padding: 1rem;
-  margin-left: -1rem;
-  overflow-x: auto;
-}
-
-@media all and (max-width: 959px) {
-  article pre {
-    width: 100%;
-  }
-}
-
 article :deep(h1) {
   display: none;
 }
 
-article .meta {
-  margin-bottom: 1em;
-}
-
-article .meta .date {
-  display: inline;
-}
-
-article .meta .author {
-  display: inline;
-}
-
-article .meta .author .name {
-  font-style: italic;
+article h2:first-child {
+  margin-top: 0;
 }
 
 nav.top {
