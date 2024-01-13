@@ -23,6 +23,10 @@ function articleComparator<T extends Article | ArticleInSeries>(a: T, b: T): num
   }
 }
 
+function slugifyUrl(url: string): string {
+  return url.replace(/^(\/articles\/[^/]+?)\/(?=[^/]+$)/, '$1-')
+}
+
 export default createContentLoader('content/articles/**/*.md', {
   excerpt: true,
   transform(rawData): Article[] {
@@ -38,7 +42,7 @@ export default createContentLoader('content/articles/**/*.md', {
       const article: ArticleInSeries = {
         title: rawArticle.frontmatter.title,
         date: rawArticle.frontmatter.date,
-        url: rawArticle.url,
+        url: slugifyUrl(rawArticle.url),
         children: [],
         series: rawArticle.frontmatter.series,
       }

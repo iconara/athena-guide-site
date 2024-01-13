@@ -11,4 +11,7 @@ export default defineConfig({
     ['link', {rel: 'apple-touch-icon', href: '/apple-touch-icon.png'}],
     ['link', {rel: 'manifest', href: '/manifest.json'}],
   ],
+  rewrites: {
+    'articles/:series/:article': 'articles/:series-:article',
+  },
 })
