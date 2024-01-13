@@ -45,6 +45,8 @@ Resources:
           Value: amplify:al2023
         - Name: _BUILD_TIMEOUT
           Value: 5
+        - Name: AMPLIFY_SKIP_BACKEND_BUILD
+          Value: true
       BuildSpec: |-
         version: 1
         frontend:
