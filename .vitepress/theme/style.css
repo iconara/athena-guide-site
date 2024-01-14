@@ -16,8 +16,8 @@ pre.vp-code {
   background-color: var(--vp-code-block-bg);
   padding: 1em;
   margin-left: -1em;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: var(--ag-block-margin-top);
+  margin-bottom: var(--ag-block-margin-bottom);
   width: calc(100% + 4em);
   overflow: auto;
 }

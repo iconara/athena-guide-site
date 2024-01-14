@@ -88,6 +88,28 @@ article :deep(h1 + h2) {
   margin-top: 0;
 }
 
+article :deep(table) {
+  border-collapse: collapse;
+  margin-top: var(--ag-block-margin-top);
+  margin-bottom: var(--ag-block-margin-bottom);
+  margin-left: -1em;
+}
+
+article :deep(table th) {
+  text-align: left;
+  border-bottom: 0.5px solid black;
+}
+
+article :deep(table tr:nth-child(2n)) {
+  text-align: left;
+  background-color: var(--ag-block-bg-color);
+}
+
+article :deep(table th),
+article :deep(table td) {
+  padding: 0.5em 1em;
+}
+
 nav.top {
   grid-column: 3;
   grid-row: 1;
