@@ -84,7 +84,7 @@ article :deep(h1) {
   display: none;
 }
 
-article h2:first-child {
+article :deep(h1 + h2) {
   margin-top: 0;
 }
 
