@@ -15,4 +15,7 @@ export default defineConfig({
     'articles/:series/:article': 'articles/:series-:article',
   },
   cleanUrls: true,
+  markdown: {
+    typographer: true,
+  }
 })
