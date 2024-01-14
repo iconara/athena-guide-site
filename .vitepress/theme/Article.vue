@@ -45,9 +45,9 @@ function formatYear(dateString: string | undefined): string {
     <ArticleList :inline="false"/>
   </nav>
   <footer>
-    &copy; {{formatYear(frontmatter.date)}} Theo Tolv, all rights reserved
-    –
-    <a href="/legal.html">Legal</a>
+    <span>&copy; {{formatYear(frontmatter.date)}} Theo Tolv, all rights reserved</span>
+    <span><a href="/legal">Legal</a></span>
+    <span><a href="/about">About</a></span>
   </footer>
 </template>
 
@@ -109,6 +109,13 @@ footer {
   grid-column: 2 / 4;
   grid-row: 4;
   margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+
+footer > *:not(:first-child)::before {
+  content: "/";
+  margin: 0.5em;
 }
 
 nav.sidebar {
