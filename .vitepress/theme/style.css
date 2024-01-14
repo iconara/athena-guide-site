@@ -1,0 +1,122 @@
+/* VitePress overrides */
+
+:root {
+  --vp-c-text-1: black;
+  --vp-font-family-base: source-serif-pro, serif;
+  --vp-font-family-mono: source-code-pro, monospace;
+  --vp-code-block-bg: var(--ag-block-bg-color);
+}
+
+div:has(> pre.vp-code) button.copy,
+div:has(> pre.vp-code) span.lang {
+  display: none;
+}
+
+pre.vp-code {
+  background-color: var(--vp-code-block-bg);
+  padding: 1em;
+  margin-left: -1em;
+  margin-top: var(--ag-block-margin-top);
+  margin-bottom: var(--ag-block-margin-bottom);
+  width: calc(100% + 4em);
+  overflow: auto;
+}
+
+ul {
+  list-style: initial;
+  margin-top: var(--ag-block-margin-top);
+  margin-bottom: var(--ag-block-margin-bottom);
+  padding-left: 1em;
+}
+
+/* Application */
+
+:root {
+  --ag-block-margin-top: 0.66em;
+  --ag-block-margin-bottom: 0.33em;
+  --ag-soft-text-color: #444;
+  --ag-highlight-color: #700;
+  --ag-block-bg-color: #f9f9f9;
+}
+
+body {
+  font-weight: 400;
+  font-style: normal;
+  font-feature-settings: "onum";
+  margin: 0;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr minmax(55ch, 75ch) 40ch 1fr;
+  row-gap: 1rem;
+  column-gap: 10ch;
+  margin: 5rem 5rem 8rem 5rem;
+}
+
+@media all and (max-width: 999px) {
+  #app {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media all and (max-width: 599px) {
+  #app {
+    margin: 1rem 2rem 8rem 1.5rem;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  border-bottom: 0.5px solid var(--ag-highlight-color);
+}
+
+a:hover {
+  text-decoration: none;
+  color: var(--ag-highlight-color);
+  border-bottom: 2px solid var(--ag-highlight-color);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 900;
+  font-style: normal;
+  line-height: 1em;
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: var(--ag-block-margin-top);
+  margin-bottom: var(--ag-block-margin-bottom);
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-top: var(--ag-block-margin-top);
+  margin-bottom: var(--ag-block-margin-bottom);
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+p {
+  margin-top: var(--ag-block-margin-top);
+}
+
+blockquote {
+  color: var(--ag-soft-text-color);
+  border-left: 1rem solid var(--ag-block-bg-color);
+  margin: 0;
+  padding: 0.5rem;
+}
+
+article blockquote p {
+  margin: 0;
+}

@@ -41,17 +41,23 @@ Resources:
       EnvironmentVariables:
         - Name: BASE_URL
           Value: https://athena.guide
+        - Name: _CUSTOM_IMAGE
+          Value: amplify:al2023
+        - Name: _BUILD_TIMEOUT
+          Value: 5
+        - Name: AMPLIFY_SKIP_BACKEND_BUILD
+          Value: true
       BuildSpec: |-
-        version: 0.1
+        version: 1
         frontend:
           phases:
             build:
               commands:
+                - nvm use 20
                 - yarn install
-                - yarn test
-                - yarn generate
+                - yarn build
           artifacts:
-            baseDirectory: dist
+            baseDirectory: .vitepress/dist
             files:
               - '**/*'
           customHeaders:
