@@ -24,6 +24,10 @@ function formatYear(dateString: string | undefined): string {
 
 <template>
   <nav class="top">
+    <details>
+      <summary></summary>
+      <ArticleList :inline="false"/>
+    </details>
     <Logo/>
   </nav>
   <h1>{{frontmatter.title}}</h1>
@@ -92,14 +96,13 @@ nav.top {
   flex-direction: row;
 }
 
-nav.top .toggle,
-nav.top .article-list {
-  display: none;
-}
-
 nav.top .logo {
   display: block;
   font-size: 6px;
+}
+
+nav.top > details {
+  display: none;
 }
 
 footer {
@@ -118,41 +121,32 @@ nav.sidebar h2 {
   margin-bottom: 0.6em;
 }
 
-@media all and (max-width: 959px) {
+@media all and (max-width: 999px) {
   nav.top {
-    position: relative;
+    justify-content: space-between;
+    margin-bottom: 2rem;
   }
 
-  nav.top .toggle {
+  nav.top > details {
     display: block;
-    cursor: pointer;
     user-select: none;
-    margin-top: 1.5rem;
-    width: 0rem;
-    flex-shrink: 0;
-    flex-grow: 0;
+  }
+
+  nav.top > details > summary {
+    list-style-type: '≡';
     font-size: 300%;
+    margin-bottom: 0.5em;
   }
 
-  nav.top .article-list {
-    display: block;
-    visibility: hidden;
-    height: 1px;
-    position: relative;
-    left: 0em;
-    top: 5rem;
-    flex-shrink: 1;
-    flex-grow: 1;
-  }
-
-  nav.top .article-list.open {
-    visibility: visible;
-    height: auto;
+  nav.top > details[open] > summary {
+    list-style-type: '×';
+    font-size: 300%;
   }
 
   nav.top .logo {
     width: 9rem;
   }
+
   .main-header {
     align-self: inherit;
   }
@@ -164,8 +158,5 @@ nav.sidebar h2 {
     padding-top: 3rem;
     padding-bottom: 3rem;
   }
-}
-
-@media all and (max-width: 599px) {
 }
 </style>

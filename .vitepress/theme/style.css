@@ -55,6 +55,19 @@ body {
   margin: 5rem 5rem 8rem 5rem;
 }
 
+@media all and (max-width: 999px) {
+  #app {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media all and (max-width: 599px) {
+  #app {
+    margin: 1rem 2rem 8rem 1.5rem;
+  }
+}
+
 a {
   text-decoration: none;
   color: black;
