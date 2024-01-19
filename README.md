@@ -2,7 +2,7 @@
 
 This repository contains the code that generates [The Athena Guide](https://the.athena.guide/).
 
-The site is built using [Nuxt.js](https://nuxtjs.org).
+The site is built using [Vitepress](https://vitepress.dev/).
 
 ## Development
 
@@ -16,12 +16,6 @@ Run the development server for day-to-day development, this starts a server on [
 
 ```bash
 $ yarn dev
-```
-
-Run the tests:
-
-```bash
-$ yarn jest --watch
 ```
 
 ### Update content
@@ -44,3 +38,6 @@ For changes to the hosting setup, edit `template.yml` and run:
 $ sam build
 $ sam deploy
 ```
+
+Add `--guided` to the deploy command the first time to set up the stack.
+
