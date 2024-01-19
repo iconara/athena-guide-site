@@ -12,7 +12,7 @@ Install all dependencies:
 $ yarn install
 ```
 
-Run the development server for day-to-day development, this starts a server on [localhost:3000](http://localhost:3000/):
+Run the development server for day-to-day development, this starts a server on [localhost:5173](http://localhost:5173/):
 
 ```bash
 $ yarn dev
