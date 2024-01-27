@@ -38,15 +38,6 @@ Resources:
       IAMServiceRole: !GetAtt AmplifyRole.Arn
       Repository: !Ref GitHubRepositoryUrl
       OauthToken: !Ref GitHubToken
-      EnvironmentVariables:
-        - Name: BASE_URL
-          Value: https://athena.guide
-        - Name: _CUSTOM_IMAGE
-          Value: amplify:al2023
-        - Name: _BUILD_TIMEOUT
-          Value: 5
-        - Name: AMPLIFY_SKIP_BACKEND_BUILD
-          Value: true
 
   AmplifyBranch:
     Type: AWS::Amplify::Branch
