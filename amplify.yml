@@ -1,0 +1,14 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - nvm use 20
+        - ./bin/build
+  artifacts:
+    baseDirectory: .vitepress/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
