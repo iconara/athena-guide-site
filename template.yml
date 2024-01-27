@@ -54,8 +54,7 @@ Resources:
             build:
               commands:
                 - nvm use 20
-                - yarn install
-                - yarn build
+                - ./bin/build
           artifacts:
             baseDirectory: .vitepress/dist
             files:
