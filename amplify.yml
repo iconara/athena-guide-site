@@ -1,7 +1,6 @@
 version: 1
 env:
   variables:
-    BASE_URL: https://athena.guide
     _CUSTOM_IMAGE: amplify:al2023
     _BUILD_TIMEOUT: 5
     AMPLIFY_SKIP_BACKEND_BUILD: true
