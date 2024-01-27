@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+yarn install
+yarn build
+
+dist_dir='.vitepress/dist'
+
+for name in README LICENSE CONTRIBUTING; do
+  rm "$dist_dir/$name.html"
+done
+
+for name in about legal; do
+  mkdir -p "$dist_dir/$name"
+  cp "$dist_dir/$name.html" "$dist_dir/$name/index.html"
+done
+
+for article_path in $(find "$dist_dir/articles" -name '*.html'); do
+  name_without_extension="${article_path%.*}"
+  mkdir -p "$name_without_extension"
+  cp "$article_path" "$name_without_extension/index.html"
+done
