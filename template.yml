@@ -38,41 +38,6 @@ Resources:
       IAMServiceRole: !GetAtt AmplifyRole.Arn
       Repository: !Ref GitHubRepositoryUrl
       OauthToken: !Ref GitHubToken
-      EnvironmentVariables:
-        - Name: BASE_URL
-          Value: https://athena.guide
-        - Name: _CUSTOM_IMAGE
-          Value: amplify:al2023
-        - Name: _BUILD_TIMEOUT
-          Value: 5
-        - Name: AMPLIFY_SKIP_BACKEND_BUILD
-          Value: true
-      BuildSpec: |-
-        version: 1
-        frontend:
-          phases:
-            build:
-              commands:
-                - nvm use 20
-                - ./bin/build
-          artifacts:
-            baseDirectory: .vitepress/dist
-            files:
-              - '**/*'
-          customHeaders:
-            - pattern: '**/*'
-              headers:
-                - key: Strict-Transport-Security
-                  value: max-age=31536000; includeSubDomains
-                - key: X-Frame-Options
-                  value: SAMEORIGIN
-                - key: X-XSS-Protection
-                  value: 1; mode=block
-                - key: X-Content-Type-Options
-                  value: nosniff
-          cache:
-            paths:
-              - node_modules/**/*
 
   AmplifyBranch:
     Type: AWS::Amplify::Branch

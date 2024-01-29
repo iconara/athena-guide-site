@@ -1,0 +1,19 @@
+version: 1
+env:
+  variables:
+    _CUSTOM_IMAGE: amplify:al2023
+    _BUILD_TIMEOUT: 5
+    AMPLIFY_SKIP_BACKEND_BUILD: true
+frontend:
+  phases:
+    build:
+      commands:
+        - nvm use 20
+        - ./bin/build
+  artifacts:
+    baseDirectory: .vitepress/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
